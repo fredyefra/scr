@@ -37,7 +37,7 @@ public class Endereco implements EntityBase, Serializable {
 		this.identificador = identificador;
 	}
 
-   @Column(name = "cep", nullable = true)
+	@Column(name = "cep", nullable = true)
 	public String getCep() {
 		return cep;
 	}
@@ -46,7 +46,7 @@ public class Endereco implements EntityBase, Serializable {
 		this.cep = cep;
 	}
 
-   @Column(name = "endereco", nullable = true)
+	@Column(name = "endereco", nullable = true)
 	public String getEndereco() {
 		return endereco;
 	}
@@ -72,7 +72,7 @@ public class Endereco implements EntityBase, Serializable {
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -100,6 +100,6 @@ public class Endereco implements EntityBase, Serializable {
 
 	@Override
 	public String toString() {
-		return "**** IDENTIFICADOR ENDERECO MODEL **** ";
+		return "**** IDENTIFICADOR ENDERECO MODEL **** " + identificador;
 	}
 }

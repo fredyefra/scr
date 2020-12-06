@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
@@ -26,6 +27,10 @@ import br.com.scr.model.Cliente;
 import br.com.scr.model.Endereco;
 import br.com.scr.util.ConsultaCorreiosWrapper;
 
+
+/**@author fredye
+ * Classe responsavel por desenhar a tela de cadastro de cliente  
+ * */
 public class CadastrarCliente extends JFrame {
 
 
@@ -48,7 +53,6 @@ public class CadastrarCliente extends JFrame {
 	private JTextField txtEmail= new JTextField ();
 	private JTextField txtCep = new JTextField();
 	private JTextField txtEndereco = new JTextField ();
-
 
 	JButton btnSalvar = new JButton();
 	private JButton btnCancelar = new JButton();

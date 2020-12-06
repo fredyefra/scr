@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,21 +16,25 @@ import javax.persistence.Table;
 public class Cliente implements EntityBase,  Serializable {
 
 	private static final long serialVersionUID = 1L;
-    private Long identificador;
+	private Long identificador;
 	private String nome;
 	private String telefone;
 	private String email;
-	
+	private Endereco fkEndereco = new Endereco();
+
 	public Cliente() {
-		// TODO Auto-generated constructor stub
+
 	}
-    
-	
+
+	public Cliente(Endereco fkEndereco) {
+		this.fkEndereco = fkEndereco;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "identificador", nullable = false)
 	public Long getIdentificador() {
-		// TODO Auto-generated method stub
 		return identificador;
 	}	
 
@@ -45,6 +51,7 @@ public class Cliente implements EntityBase,  Serializable {
 		this.nome = nome;
 	}
 
+	@Column(name="telefone")
 	public String getTelefone() {
 		return telefone;
 	}
@@ -53,6 +60,7 @@ public class Cliente implements EntityBase,  Serializable {
 		this.telefone = telefone;
 	}
 
+	@Column(name="email")
 	public String getEmail() {
 		return email;
 	}
@@ -60,4 +68,25 @@ public class Cliente implements EntityBase,  Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	
+	@ManyToOne
+	@JoinColumn(name="fkEndereco")
+	public Endereco getFkEndereco() {
+		return fkEndereco;
+	}
+
+	public void setFkEndereco(Endereco fkEndereco) {
+		this.fkEndereco = fkEndereco;
+	}
+
+	
+	
+	/*public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}*/
 }
