@@ -11,5 +11,4 @@ public interface EntityBase {
 
 	public Long getIdentificador();
 	
-
 }

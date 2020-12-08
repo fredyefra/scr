@@ -9,8 +9,6 @@ import br.com.correios.bsb.sigep.master.bean.cliente.SQLException;
 import br.com.correios.bsb.sigep.master.bean.cliente.SigepClienteException;
 import br.com.scr.model.Endereco;
 
-
-
 /**@author fredye
  * Classe responsavel por receber endereco via WS dos correios  
  * */
@@ -27,10 +25,9 @@ public class ConsultaCorreiosWrapper implements Serializable {
 
 		try {
 			enderecoERP = new AtendeClienteProxy().consultaCEP(cep);
-
-			endereco.setCep(enderecoERP.getCep());
+            endereco.setCep(enderecoERP.getCep());
 			endereco.setEndereco(enderecoERP.getEnd());
-			endereco.setCidade(enderecoERP.getBairro());	  
+			endereco.setCidade(enderecoERP.getBairro() + " - " + enderecoERP.getCidade());	  
 
 		}   
 		catch (SigepClienteException e) {
@@ -50,16 +47,17 @@ public class ConsultaCorreiosWrapper implements Serializable {
 	}
 
 
-	public static void main(String[] args) throws br.com.correios.bsb.sigep.master.bean.cliente.SQLException, SigepClienteException, RemoteException {
-
-		System.out.println(new ConsultaCorreiosWrapper().cepCorreios("72600300"));
-
-		System.out.println(endereco.getCep()+ "--" +endereco.getEndereco()+ "--" +endereco.getCidade() );
-
-		/*
-		 * EnderecoERP enderecoERP = new AtendeClienteProxy().consultaCEP("71720585");
-		 * 
-		 * System.out.println(enderecoERP.getBairro());
-		 */
-	}
+	/*
+	 * public static void main(String[] args) throws
+	 * br.com.correios.bsb.sigep.master.bean.cliente.SQLException,
+	 * SigepClienteException, RemoteException {
+	 * 
+	 * System.out.println(new ConsultaCorreiosWrapper().cepCorreios("72600300"));
+	 * 
+	 * System.out.println(endereco.getCep()+ "--" +endereco.getEndereco()+ "--" +
+	 * endereco.getCidade() );
+	 * 
+	 * 
+	 * }
+	 */
 }

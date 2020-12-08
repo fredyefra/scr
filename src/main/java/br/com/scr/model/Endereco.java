@@ -100,6 +100,6 @@ public class Endereco implements EntityBase, Serializable {
 
 	@Override
 	public String toString() {
-		return "**** IDENTIFICADOR ENDERECO MODEL **** " + identificador;
+		return "**** IDENTIFICADOR ENDERECO MODEL **** " + identificador + cep;
 	}
 }

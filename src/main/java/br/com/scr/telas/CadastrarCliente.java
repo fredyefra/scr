@@ -1,9 +1,11 @@
 package br.com.scr.telas;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -14,7 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -26,6 +30,10 @@ import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
 import br.com.scr.model.Endereco;
 import br.com.scr.util.ConsultaCorreiosWrapper;
+import br.com.scr.util.TabelaModel;
+
+import javax.swing.JSeparator;
+import javax.swing.JTable;
 
 
 /**@author fredye
@@ -60,13 +68,12 @@ public class CadastrarCliente extends JFrame {
 	private JTextField txtCidade = new JTextField ();
 
 
-	private ConsultaCorreiosWrapper consultaCorreios = new ConsultaCorreiosWrapper();
-	private EnderecoERP enderecoERP;
+	
 	private Endereco endereco = new Endereco();
 
 	private Cliente cliente = new Cliente();
 	private GenericDAO dao = new GenericDAO();
-	
+
 	public static void main(String[] args)  { 
 
 		CadastrarCliente frame = new CadastrarCliente();
@@ -85,14 +92,20 @@ public class CadastrarCliente extends JFrame {
 		setBounds(100, 100, 1366, 768 );
 		tela = new JPanel();
 		tela.setBorder(new EmptyBorder(5, 5, 5, 5));
+		//tela.setBackground(new Color(255,255,255));
 		setContentPane(tela);
 
+
+
 		JPanel bodyBanner = new JPanel();
+		//bodyBanner.setBackground(new Color(255,255,255));
 		bodyBanner.setBorder(new TitledBorder(null, "Dados Pessoais", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 
 		bannerPanel = new JPanel();
 
 		JPanel ButtonPanel = new JPanel();
+
+		JSeparator separator = new JSeparator();
 		GroupLayout gl_tela = new GroupLayout(tela);
 		gl_tela.setHorizontalGroup(
 				gl_tela.createParallelGroup(Alignment.TRAILING)
@@ -105,7 +118,9 @@ public class CadastrarCliente extends JFrame {
 										.addContainerGap()
 										.addComponent(bodyBanner, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE))
 								.addGroup(gl_tela.createSequentialGroup()
-										.addGap(324)
+										.addGap(58)
+										.addComponent(separator, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
+										.addGap(265)
 										.addComponent(ButtonPanel, GroupLayout.PREFERRED_SIZE, 674, GroupLayout.PREFERRED_SIZE)))
 						.addContainerGap())
 				);
@@ -115,9 +130,11 @@ public class CadastrarCliente extends JFrame {
 						.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 						.addGap(63)
 						.addComponent(bodyBanner, GroupLayout.PREFERRED_SIZE, 324, GroupLayout.PREFERRED_SIZE)
-						.addGap(52)
-						.addComponent(ButtonPanel, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(82, Short.MAX_VALUE))
+						.addGap(54)
+						.addGroup(gl_tela.createParallelGroup(Alignment.LEADING)
+								.addComponent(ButtonPanel, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
+								.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(80, Short.MAX_VALUE))
 				);
 
 		btnSalvar.setText("SALVAR");
@@ -153,10 +170,11 @@ public class CadastrarCliente extends JFrame {
 		jLabel.setIcon(new ImageIcon("add-user-24.png"));
 		jLabel.setFont(new Font("Calibri", 1, 36));
 		jLabel.setForeground(new java.awt.Color(255, 255, 255));
-		jLabel.setText("Cadastrar Cliente");
+		jLabel.setText("CADASTRAR CLIENTE");
 
 		bannerPanel.setSize(100, 768);
-		bannerPanel.setBackground(new java.awt.Color(46, 204, 113));
+		//bannerPanel.setBackground(new java.awt.Color(46, 204, 113));
+		bannerPanel.setBackground(new java.awt.Color(99,130,191));
 		bannerPanel.add(jLabel,BorderLayout.NORTH);
 
 		lblNome.setText("NOME:");
@@ -277,77 +295,68 @@ public class CadastrarCliente extends JFrame {
 						.addGap(42))
 				);
 		bodyBanner.setLayout(gl_bodyBanner);
-		
-	   	//consultarCep(); 
-       		
-		
+
+		consultarCep(); 
 		salvar();
 		cancelar();
 		tela.setLayout(gl_tela);
 	}
 
-
+	
+	
 	private void consultarCep() {
 		txtCep.getDocument().addDocumentListener(new DocumentListener() {
-			
+
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
 				warn();
-				
 			}
-			
+
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
 				warn();
-				
 			}
-			
+
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
 				warn();
-				
 			}
-		
-		public void warn() {
-			if (txtCep.getText().length() == 8) {
-				Endereco endereco = consultaCorreios.cepCorreios(txtCep.getText());
-				txtEndereco.setText(endereco.getEndereco());
-			    txtComplemento.setText(endereco.getComplemento());
-			    txtCidade.setText(endereco.getCidade());
+
+			public void warn() {
+				if (txtCep.getText().length() == 8) {
+					ConsultaCorreiosWrapper consultaCorreios = new ConsultaCorreiosWrapper();
+					endereco = consultaCorreios.cepCorreios(txtCep.getText());
+					txtEndereco.setText(endereco.getEndereco());
+					txtComplemento.setText(endereco.getComplemento());
+					txtCidade.setText(endereco.getCidade());
+				}
 			}
-		}
-		
+
 		});
-		
 	}
 
 	private void salvar() {
-
 		btnSalvar.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent eventoSalvar) {
 
 				if (eventoSalvar.getSource() == btnSalvar) {
 
 					cliente.setNome(txtNome.getText());
-					cliente.setTelefone(txtDDD.getText()+txtTelefone.getText());
-	                cliente.setEmail(txtEmail.getText()); 
-					
-					dao.salvar(cliente);
-					
-					JOptionPane.showMessageDialog(null, "SALVAR CADASTRO!");	 
-					//dispose();	
-					//new Menu(); 
+					cliente.setTelefone(txtDDD.getText()+"-"+txtTelefone.getText());
+					cliente.setEmail(txtEmail.getText()); 
+					cliente.setFkEndereco(endereco);
 
+					dao.salvar(cliente);
+
+					JOptionPane.showMessageDialog(null, cliente.getNome()+", " + "SALVO COM SUCESSO!"+JOptionPane.INFORMATION_MESSAGE);	 
+					new FazerPedido(); 
+					dispose();
 				}	
 			}}); 
 	}	
 
-
 	private void cancelar() {
-
 		btnCancelar.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent eventoCancelar) {
 
 				if (eventoCancelar.getSource() == btnCancelar) {

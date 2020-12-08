@@ -1,10 +1,11 @@
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/TipoGerente.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ContratoERP.java
-/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/painel/Teste.java
+/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/telas/Newdate.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/MedidaTO.java
+/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/telas/FazerPedido.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ErroMontagemRelatorio.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/PreListaPostagem.java
-/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/painel/ClientesForm.java
+/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/util/Teste.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/util/PersistenceManager.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ServicoAdicionalTO.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/SigepClienteException.java
@@ -30,7 +31,6 @@
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ContratoERPPK.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ColetaReversa.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/CartaoPostagemERP.java
-/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/painel/ClientesBanner.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/CategoriaServico.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ServicoSigep.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ServicoAdicionalXML.java
@@ -44,6 +44,7 @@
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/AtendeClienteProxy.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ChancelaMaster.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/Exception.java
+/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/util/TabelaModel.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/AtendeClienteServiceSoapBindingStub.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/Acao.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/telas/CadastrarCliente.java
@@ -57,7 +58,6 @@
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/AtendeClienteServiceSoapBindingImpl.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/StatusPlp.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/model/Endereco.java
-/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/telas/Banco.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/StatusGerente.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/AtendeClienteServiceLocator.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/RetornoCancelamento.java

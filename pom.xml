@@ -10,8 +10,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<!-- <name>httpclient-demo</name>
-	<url>http://maven.apache.org</url> -->
+	<!-- <name>httpclient-demo</name> <url>http://maven.apache.org</url> -->
 
 	<dependencies>
 
@@ -53,7 +52,23 @@
 			<artifactId>axis2-kernel</artifactId>
 			<version>1.6.2</version>
 		</dependency>
- 
+
+		<!-- https://mvnrepository.com/artifact/com.liferay/org.apache.axis -->
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>org.apache.axis</artifactId>
+			<version>1.4.LIFERAY-PATCHED-1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.xml.rpc/javax.xml.rpc-api -->
+		<dependency>
+			<groupId>javax.xml.rpc</groupId>
+			<artifactId>javax.xml.rpc-api</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
+
+
 	</dependencies>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>

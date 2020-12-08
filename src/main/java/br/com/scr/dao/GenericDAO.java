@@ -1,28 +1,46 @@
 package br.com.scr.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import br.com.scr.model.Cliente;
 import br.com.scr.util.PersistenceManager;
 
 public class GenericDAO  {
 
-	  private EntityManager manager;
-	  private EntityManagerFactory factory;
+	  private EntityManager em;
+	  private EntityManagerFactory emf;
 	  
 	  public GenericDAO() {
-		  factory = Persistence.createEntityManagerFactory("scr");
-		  manager = PersistenceManager.instance.getEntityManager();
+		  emf = Persistence.createEntityManagerFactory("scr");
+		  em = PersistenceManager.instance.getEntityManager();
       }
 	  
 	 public void salvar(Cliente cliente) {
-		  manager.getTransaction().begin(); 
-		  manager.persist(cliente);
-		  manager.getTransaction().commit();
-		  manager.close();
+		  em.getTransaction().begin(); 
+		  em.persist(cliente);
+		  em.getTransaction().commit();
+		  em.close();
 		 
 	}
 
+	 public List<Cliente> findAll() {
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<Cliente> cq = cb.createQuery(Cliente.class);
+			Root<Cliente> root = cq.from(Cliente.class);
+			cq.select(root);
+			TypedQuery<Cliente> query = em.createQuery(cq);
+
+			return query.getResultList();
+		}
+
+	 
+	 
 }

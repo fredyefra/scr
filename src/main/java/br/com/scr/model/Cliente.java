@@ -2,13 +2,14 @@ package br.com.scr.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -29,7 +30,6 @@ public class Cliente implements EntityBase,  Serializable {
 	public Cliente(Endereco fkEndereco) {
 		this.fkEndereco = fkEndereco;
 	}
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,19 +69,16 @@ public class Cliente implements EntityBase,  Serializable {
 		this.email = email;
 	}
 
-	
-	@ManyToOne
-	@JoinColumn(name="fkEndereco")
-	public Endereco getFkEndereco() {
-		return fkEndereco;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="fkEndereco") public Endereco getFkEndereco() { 
+		return fkEndereco; 
 	}
 
-	public void setFkEndereco(Endereco fkEndereco) {
-		this.fkEndereco = fkEndereco;
+	public void setFkEndereco(Endereco fkEndereco) { 
+		this.fkEndereco = fkEndereco; 
 	}
 
-	
-	
 	/*public Endereco getEndereco() {
 		return endereco;
 	}
@@ -89,4 +86,10 @@ public class Cliente implements EntityBase,  Serializable {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}*/
+
+	@Override
+	public String toString() {
+		return nome;
+	}
+
 }
