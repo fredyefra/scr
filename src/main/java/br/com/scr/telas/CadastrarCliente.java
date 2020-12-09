@@ -167,7 +167,7 @@ public class CadastrarCliente extends JFrame {
 		ButtonPanel.setLayout(gl_ButtonPanel);
 
 		JLabel jLabel = new JLabel();
-		jLabel.setIcon(new ImageIcon("add-user-24.png"));
+		jLabel.setIcon(new ImageIcon("add-user-2-32.png"));
 		jLabel.setFont(new Font("Calibri", 1, 36));
 		jLabel.setForeground(new java.awt.Color(255, 255, 255));
 		jLabel.setText("CADASTRAR CLIENTE");

@@ -16,7 +16,7 @@ public class TabelaModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 	private GenericDAO dao;
-	private final String [] nomeColunas = {"IDENTIFICADOR","NOME","TELEFONE","E-MAIL"};
+	private final String [] nomeColunas = {"NOME","TELEFONE","E-MAIL","ENDERECO", "COMPLEMENTO"};
 
 	private List<Cliente> clientes;
 
@@ -45,10 +45,12 @@ public class TabelaModel extends AbstractTableModel {
 		    Cliente usuarioSelecionado = clientes.get(linha);
 	        Object valueObject = null;
 	        switch(coluna){
-	            case 0: valueObject = usuarioSelecionado.getIdentificador(); break;
-	            case 1: valueObject = usuarioSelecionado.getNome(); break;
-	            case 2 : valueObject = usuarioSelecionado.getTelefone(); break;
-	            case 3 : valueObject = usuarioSelecionado.getEmail(); break;
+	            //case 0: valueObject = usuarioSelecionado.getIdentificador(); break;
+	            case 0: valueObject = usuarioSelecionado.getNome(); break;
+	            case 1 : valueObject = usuarioSelecionado.getTelefone(); break;
+	            case 2 : valueObject = usuarioSelecionado.getEmail(); break;
+	            case 3 : valueObject = usuarioSelecionado.getFkEndereco().getEndereco();break;
+	            case 4 : valueObject = usuarioSelecionado.getFkEndereco().getComplemento();break;
 	            default: System.err.println("Índice inválido para propriedade do bean Usuario.class");
 	        }			
 		
@@ -70,7 +72,7 @@ public class TabelaModel extends AbstractTableModel {
 	public Class<?> getColumnClass(int columnIndex) {
 		switch (columnIndex) {
 		case 0: 
-			return Integer.class;
+			return String.class;
 
 		case 1: 
 			return String.class;	
@@ -80,7 +82,9 @@ public class TabelaModel extends AbstractTableModel {
 
 		case 3: 
 			return String.class;	
-
+	
+		case 4: 
+			return String.class;	
 		}
 	
 		return null;
