@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -344,12 +345,18 @@ public class CadastrarCliente extends JFrame {
 					cliente.setNome(txtNome.getText());
 					cliente.setTelefone(txtDDD.getText()+"-"+txtTelefone.getText());
 					cliente.setEmail(txtEmail.getText()); 
+					endereco.setComplemento(txtComplemento.getText());
 					cliente.setFkEndereco(endereco);
 
 					dao.salvar(cliente);
 
 					JOptionPane.showMessageDialog(null, cliente.getNome()+", " + "SALVO COM SUCESSO!"+JOptionPane.INFORMATION_MESSAGE);	 
-					new FazerPedido(); 
+					try {
+						new FazerPedido();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
 					dispose();
 				}	
 			}}); 

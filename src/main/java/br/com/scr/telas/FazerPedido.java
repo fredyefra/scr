@@ -3,42 +3,36 @@ package br.com.scr.telas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
 import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
 import br.com.scr.util.TabelaModel;
-import javax.swing.UIManager;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.GridLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.EtchedBorder;
-import java.awt.SystemColor;
-import javax.swing.JCheckBox;
-import javax.swing.JSeparator;
-import java.awt.Cursor;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
@@ -55,7 +49,15 @@ public class FazerPedido extends JFrame {
 	private Container tela;
 	JFrame frame = new JFrame();
 
-	public FazerPedido() {
+
+	
+	protected  FileInputStream stream;
+	protected InputStreamReader reader;
+    BufferedReader br;
+	protected String linha;
+	protected JComboBox comboBox = new JComboBox();
+	
+	public FazerPedido() throws IOException {
 
 		List<Cliente> clientes = new GenericDAO().findAll();
 		model = new TabelaModel(clientes);
@@ -128,13 +130,15 @@ public class FazerPedido extends JFrame {
 				.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1366, GroupLayout.PREFERRED_SIZE)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
-						.addComponent(bannerPanel, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE))
+					.addComponent(bannerPanel, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
 					.addGap(22))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(scroller, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
+					.addGap(22))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
 					.addGap(22))
 		);
 		groupLayout.setVerticalGroup(
@@ -145,9 +149,9 @@ public class FazerPedido extends JFrame {
 					.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 					.addGap(31)
 					.addComponent(scroller, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
-					.addGap(85)
+					.addGap(18)
 					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
-					.addGap(204))
+					.addGap(271))
 		);
 		
 		JPanel panel_2 = new JPanel();
@@ -197,8 +201,8 @@ public class FazerPedido extends JFrame {
 		
 		JPanel panel_2_1_1 = new JPanel();
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"FRANGO"}));
+		comboBox = new JComboBox();
+		//comboBox.setModel(new DefaultComboBoxModel(new String[] {"FRANGO FRITO","BIFE ACEBOLADO"}));
 		GroupLayout gl_panel_2_1_1 = new GroupLayout(panel_2_1_1);
 		gl_panel_2_1_1.setHorizontalGroup(
 			gl_panel_2_1_1.createParallelGroup(Alignment.TRAILING)
@@ -224,8 +228,8 @@ public class FazerPedido extends JFrame {
 					.addGap(30)
 					.addComponent(panel_2_1, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(panel_2_1_1, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(796, Short.MAX_VALUE))
+					.addComponent(panel_2_1_1, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(724, Short.MAX_VALUE))
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -237,8 +241,8 @@ public class FazerPedido extends JFrame {
 							.addContainerGap())
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_2_1, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-								.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+								.addComponent(panel_2_1, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+								.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
 							.addGap(23))))
 		);
 		
@@ -291,9 +295,33 @@ public class FazerPedido extends JFrame {
 						frame.setVisible(true);
 						frame.setLocationRelativeTo(null);
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+	readText();
+						
 	}
 
-	public static void main(String[] args) {
+	
+	private  String readText() throws IOException {
+		 stream = new FileInputStream("/opt/cardapio.txt");
+	     reader = new InputStreamReader(stream);
+	      br = new BufferedReader(reader);  
+	    linha = br.readLine();
+
+	    comboBox.removeAllItems();
+
+	    while(linha != null){
+	    	comboBox.addItem(linha);
+	        linha = br.readLine();
+	    }
+
+	    br.close();
+	    return linha;
+	}
+
+	
+	
+	
+	public static void main(String[] args) throws IOException {
 		new FazerPedido();
 	}
 }
