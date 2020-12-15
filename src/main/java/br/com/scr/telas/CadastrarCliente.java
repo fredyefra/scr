@@ -30,6 +30,7 @@ import br.com.correios.bsb.sigep.master.bean.cliente.EnderecoERP;
 import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
 import br.com.scr.model.Endereco;
+import br.com.scr.model.Pedido;
 import br.com.scr.util.ConsultaCorreiosWrapper;
 import br.com.scr.util.TabelaModel;
 
@@ -348,6 +349,14 @@ public class CadastrarCliente extends JFrame {
 					endereco.setComplemento(txtComplemento.getText());
 					cliente.setFkEndereco(endereco);
 
+					Pedido pedido1 = new Pedido("1",cliente);
+					Pedido pedido2 = new Pedido("2",cliente);
+					Pedido pedido3 = new Pedido("1",cliente);
+					
+					cliente.getPedidos().add(pedido1);
+					cliente.getPedidos().add(pedido2);
+					cliente.getPedidos().add(pedido3);
+					
 					dao.salvar(cliente);
 
 					JOptionPane.showMessageDialog(null, cliente.getNome()+", " + "SALVO COM SUCESSO!"+JOptionPane.INFORMATION_MESSAGE);	 

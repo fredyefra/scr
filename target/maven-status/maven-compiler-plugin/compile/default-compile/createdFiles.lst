@@ -7,6 +7,7 @@ br/com/scr/model/EntityBase.class
 br/com/correios/bsb/sigep/master/bean/cliente/StatusUsuario.class
 br/com/correios/bsb/sigep/master/bean/cliente/ChancelaMaster.class
 br/com/correios/bsb/sigep/master/bean/cliente/AtendeClienteServiceLocator.class
+br/com/scr/telas/FazerPedido$1.class
 br/com/correios/bsb/sigep/master/bean/cliente/AtendeClienteService.class
 br/com/correios/bsb/sigep/master/bean/cliente/TipoGerente.class
 br/com/correios/bsb/sigep/master/bean/cliente/GerenteConta.class
@@ -61,6 +62,7 @@ br/com/correios/bsb/sigep/master/bean/cliente/ObjetoPostalPK.class
 br/com/correios/bsb/sigep/master/bean/cliente/UsuarioInstalacao.class
 br/com/correios/bsb/sigep/master/bean/cliente/DimensaoTO.class
 br/com/scr/model/Endereco.class
+br/com/scr/model/Pedido.class
 br/com/correios/bsb/sigep/master/bean/cliente/ClienteERP.class
 br/com/correios/bsb/sigep/master/bean/cliente/VigenciaERP.class
 br/com/correios/bsb/sigep/master/bean/cliente/RetornoCancelamento.class

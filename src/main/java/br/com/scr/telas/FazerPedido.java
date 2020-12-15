@@ -4,9 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -47,13 +48,14 @@ public class FazerPedido extends JFrame {
 	private TabelaModel model;
 	private JTable table;
 	private Container tela;
-	JFrame frame = new JFrame();
-
-
+	private JFrame frame = new JFrame();
+    
+   
 	
+	protected Cliente cliente = new Cliente();
 	protected  FileInputStream stream;
 	protected InputStreamReader reader;
-    BufferedReader br;
+    protected BufferedReader br;
 	protected String linha;
 	protected JComboBox comboBox = new JComboBox();
 	
@@ -110,6 +112,7 @@ public class FazerPedido extends JFrame {
 		
 		table.getColumnModel().getColumn(4).setResizable(false);
 		table.getColumnModel().getColumn(4).setMinWidth(100);
+		
 		
 		JPanel bannerPanel = new JPanel();
 		bannerPanel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
@@ -288,7 +291,6 @@ public class FazerPedido extends JFrame {
 
 						frame.getContentPane().setLayout(groupLayout);
 
-
 						tela = frame.getContentPane();
 
 
@@ -296,31 +298,59 @@ public class FazerPedido extends JFrame {
 						frame.setLocationRelativeTo(null);
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-	readText();
-						
+	carregarCardapio();
+	selecionarLinha();
+
+	
 	}
 
+
+	/*
+	 * private void extracted() { table.addMouseListener(new MouseAdapter() {
+	 * 
+	 * @Override public void mousePressed(MouseEvent e) { if (e.getButton() ==
+	 * MouseEvent.BUTTON1 && e.getClickCount() == 1) { String nome = (String)
+	 * table.getValueAt(table.getSelectedRow(),0); String telefone = (String)
+	 * table.getValueAt(table.getSelectedRow(),1); System.out.println(nome +
+	 * telefone); } }
+	 * 
+	 * }); }
+	 */
+	private Cliente selecionarLinha() {
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 1) {
+					cliente =  model.getCliente((table.getSelectedRow()));
+					System.out.println(cliente.getFkEndereco().getCep());
+				}
+			}
+
+		});
+	return cliente;
+	}
 	
-	private  String readText() throws IOException {
-		 stream = new FileInputStream("/opt/cardapio.txt");
-	     reader = new InputStreamReader(stream);
-	      br = new BufferedReader(reader);  
-	    linha = br.readLine();
+	private  String carregarCardapio() throws IOException {
+		stream = new FileInputStream("/opt/cardapio.txt");
+		reader = new InputStreamReader(stream);
+		br = new BufferedReader(reader);  
+		linha = br.readLine();
 
-	    comboBox.removeAllItems();
+		comboBox.removeAllItems();
 
-	    while(linha != null){
-	    	comboBox.addItem(linha);
-	        linha = br.readLine();
-	    }
+		while(linha != null){
+			comboBox.addItem(linha);
+			linha = br.readLine();
+		}
 
-	    br.close();
-	    return linha;
+		br.close();
+		return linha;
 	}
 
+
 	
-	
-	
+
+
 	public static void main(String[] args) throws IOException {
 		new FazerPedido();
 	}

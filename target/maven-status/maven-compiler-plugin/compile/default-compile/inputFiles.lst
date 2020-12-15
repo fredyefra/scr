@@ -1,6 +1,7 @@
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/TipoGerente.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ContratoERP.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/telas/Newdate.java
+/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/model/Pedido.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/MedidaTO.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/telas/FazerPedido.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ErroMontagemRelatorio.java

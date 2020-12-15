@@ -1,6 +1,8 @@
 package br.com.scr.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,19 +11,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_cliente")
-public class Cliente implements EntityBase,  Serializable {
+public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Long identificador;
+	private Long cliente_identificador;
 	private String nome;
 	private String telefone;
 	private String email;
 	private Endereco fkEndereco = new Endereco();
+	//private Set<Pedido> pedidos = new HashSet();
+    List<Pedido> pedidos = new ArrayList<Pedido>();
 
 	public Cliente() {
 
@@ -33,13 +38,13 @@ public class Cliente implements EntityBase,  Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "identificador", nullable = false)
-	public Long getIdentificador() {
-		return identificador;
-	}	
+	@Column(name = "cliente_identificador", nullable = false)
+	public Long getCliente_identificador() {
+		return cliente_identificador;
+	}
 
-	public void setIdentificador(Long identificador) {
-		this.identificador = identificador;
+	public void setCliente_identificador(Long cliente_identificador) {
+		this.cliente_identificador = cliente_identificador;
 	}
 
 	@Column(name="nome")
@@ -69,9 +74,9 @@ public class Cliente implements EntityBase,  Serializable {
 		this.email = email;
 	}
 
-
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="fkEndereco") public Endereco getFkEndereco() { 
+	@JoinColumn(name="fkEndereco") 
+	public Endereco getFkEndereco() { 
 		return fkEndereco; 
 	}
 
@@ -79,14 +84,24 @@ public class Cliente implements EntityBase,  Serializable {
 		this.fkEndereco = fkEndereco; 
 	}
 
-	/*public Endereco getEndereco() {
-		return endereco;
+	
+	
+	@OneToMany (cascade = CascadeType.ALL,orphanRemoval = true) 
+	@JoinColumn(name="fkPedidos")
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}*/
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
+	/*
+	 * @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade =
+	 * CascadeType.ALL) public Set<Pedido> getPedidos() { return pedidos; }
+	 * 
+	 * public void setPedidos(Set<Pedido> pedidos) { this.pedidos = pedidos; }
+	 */
 	@Override
 	public String toString() {
 		return nome;
