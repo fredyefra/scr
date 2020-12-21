@@ -1,12 +1,14 @@
 package br.com.scr.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,8 +27,8 @@ public class Cliente implements Serializable {
 	private String telefone;
 	private String email;
 	private Endereco fkEndereco = new Endereco();
-	//private Set<Pedido> pedidos = new HashSet();
-    List<Pedido> pedidos = new ArrayList<Pedido>();
+	private Set<Pedido> pedidos = new HashSet();
+    //List<Pedido> pedidos = new ArrayList<Pedido>();
 
 	public Cliente() {
 
@@ -86,22 +88,21 @@ public class Cliente implements Serializable {
 
 	
 	
-	@OneToMany (cascade = CascadeType.ALL,orphanRemoval = true) 
-	@JoinColumn(name="fkPedidos")
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
 	/*
-	 * @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade =
-	 * CascadeType.ALL) public Set<Pedido> getPedidos() { return pedidos; }
+	 * @OneToMany (cascade = CascadeType.ALL,orphanRemoval = true)
 	 * 
-	 * public void setPedidos(Set<Pedido> pedidos) { this.pedidos = pedidos; }
+	 * @JoinColumn(name="fkPedidos") public List<Pedido> getPedidos() { return
+	 * pedidos; }
+	 * 
+	 * public void setPedidos(List<Pedido> pedidos) { this.pedidos = pedidos; }
 	 */
+	
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL) 
+	public Set<Pedido> getPedidos() { return pedidos; }
+
+	public void setPedidos(Set<Pedido> pedidos) { 
+		this.pedidos = pedidos; }
+
 	@Override
 	public String toString() {
 		return nome;

@@ -60,7 +60,7 @@ public class TabelaModel extends AbstractTableModel {
 	public Cliente getCliente(int linha) {
 
 		
-
+		cliente.setCliente_identificador(clientes.get(linha).getCliente_identificador());
 		cliente.setNome(clientes.get(linha).getNome());
         cliente.setTelefone(clientes.get(linha).getTelefone());
 		cliente.setEmail(clientes.get(linha).getEmail());

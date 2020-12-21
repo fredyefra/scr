@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
@@ -15,13 +17,15 @@ import java.util.List;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -33,7 +37,9 @@ import javax.swing.table.JTableHeader;
 
 import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
+import br.com.scr.model.Pedido;
 import br.com.scr.util.TabelaModel;
+import javax.swing.JSplitPane;
 
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
@@ -58,6 +64,9 @@ public class FazerPedido extends JFrame {
     protected BufferedReader br;
 	protected String linha;
 	protected JComboBox comboBox = new JComboBox();
+	protected JTextArea txt = new JTextArea();
+	protected JButton btnSalvar = new JButton("SALVAR");
+	//protected private GenericDAO dao = new GenericDAO();
 	
 	public FazerPedido() throws IOException {
 
@@ -127,6 +136,8 @@ public class FazerPedido extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "CARD\u00C1PIO", TitledBorder.LEFT, TitledBorder.ABOVE_TOP, null, new Color(51, 51, 51)));
 		
+		
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -143,6 +154,10 @@ public class FazerPedido extends JFrame {
 					.addContainerGap()
 					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
 					.addGap(22))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(449)
+					.addComponent(btnSalvar)
+					.addContainerGap(800, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -154,64 +169,33 @@ public class FazerPedido extends JFrame {
 					.addComponent(scroller, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
-					.addGap(271))
+					.addGap(59)
+					.addComponent(btnSalvar)
+					.addGap(187))
 		);
-		
-		JPanel panel_2 = new JPanel();
-		
-		JPanel panel_2_1 = new JPanel();
-		
-		JCheckBox chckbxMacarro = new JCheckBox("MACARRÃO");
-		
-		JCheckBox chckbxBatata = new JCheckBox("BATATA FRITA");
-		
-		JCheckBox chckbxFeijoada_1_1 = new JCheckBox("VINAGRETE");
-		
-		JCheckBox chckbxSalada_1_1 = new JCheckBox("MAIONESE");
-		
-		JCheckBox chckbxSalpico = new JCheckBox("SALPICÃO");
-		GroupLayout gl_panel_2_1 = new GroupLayout(panel_2_1);
-		gl_panel_2_1.setHorizontalGroup(
-			gl_panel_2_1.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 237, Short.MAX_VALUE)
-				.addGroup(gl_panel_2_1.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_2_1.createParallelGroup(Alignment.LEADING)
-						.addComponent(chckbxMacarro)
-						.addComponent(chckbxBatata)
-						.addComponent(chckbxFeijoada_1_1)
-						.addComponent(chckbxSalada_1_1)
-						.addComponent(chckbxSalpico))
-					.addContainerGap(141, Short.MAX_VALUE))
-		);
-		gl_panel_2_1.setVerticalGroup(
-			gl_panel_2_1.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 153, Short.MAX_VALUE)
-				.addGroup(gl_panel_2_1.createSequentialGroup()
-					.addGap(23)
-					.addComponent(chckbxMacarro)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxBatata)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxFeijoada_1_1)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxSalada_1_1)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxSalpico)
-					.addContainerGap(15, Short.MAX_VALUE))
-		);
-		panel_2_1.setLayout(gl_panel_2_1);
 		
 		JPanel panel_2_1_1 = new JPanel();
 		
 		comboBox = new JComboBox();
-		//comboBox.setModel(new DefaultComboBoxModel(new String[] {"FRANGO FRITO","BIFE ACEBOLADO"}));
+		
+		JSlider slider = new JSlider();
+		slider = new JSlider(0, 200, 0);
+        slider.setMinorTickSpacing(5);
+        slider.setMajorTickSpacing(25);
+        slider.setPaintLabels(true);
+        //slider.setOrientation(SwingConstants.VERTICAL);
+        slider.setPaintTicks(true);
+        //add(slider, BorderLayout.CENTER);
+		
+		
 		GroupLayout gl_panel_2_1_1 = new GroupLayout(panel_2_1_1);
 		gl_panel_2_1_1.setHorizontalGroup(
 			gl_panel_2_1_1.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_2_1_1.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(comboBox, 0, 151, Short.MAX_VALUE)
+					.addGroup(gl_panel_2_1_1.createParallelGroup(Alignment.TRAILING)
+						.addComponent(slider, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+						.addComponent(comboBox, Alignment.LEADING, 0, 211, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		gl_panel_2_1_1.setVerticalGroup(
@@ -219,72 +203,58 @@ public class FazerPedido extends JFrame {
 				.addGroup(gl_panel_2_1_1.createSequentialGroup()
 					.addGap(28)
 					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(94, Short.MAX_VALUE))
+					.addGap(49)
+					.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(29, Short.MAX_VALUE))
 		);
 		panel_2_1_1.setLayout(gl_panel_2_1_1);
+		
+		JPanel panel_2 = new JPanel();
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(30)
-					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 122, GroupLayout.PREFERRED_SIZE)
-					.addGap(30)
-					.addComponent(panel_2_1, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(panel_2_1_1, GroupLayout.PREFERRED_SIZE, 235, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(724, Short.MAX_VALUE))
+					.addGap(24)
+					.addComponent(panel_2_1_1, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
+					.addGap(41)
+					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_panel_1.setVerticalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_1.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(panel_2_1_1, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-								.addComponent(panel_2_1, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-								.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
-							.addGap(23))))
+					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panel_2_1_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 146, Short.MAX_VALUE))
+					.addContainerGap(30, Short.MAX_VALUE))
 		);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("ARROZ");
+		JSplitPane splitPane = new JSplitPane();
 		
-		JCheckBox chckbxFeijo = new JCheckBox("FEIJÃO");
+		//txt = new JTextArea();
+		//txt.append("---------------------------------------------------------"+cliente.getNome());
 		
-		JCheckBox chckbxFeijoada_1 = new JCheckBox("FEIJOADA");
-		
-		JCheckBox chckbxSalada_1 = new JCheckBox("SALADA");
-		
-		JCheckBox chckbxFarofa = new JCheckBox("FAROFA");
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addComponent(chckbxNewCheckBox)
-						.addComponent(chckbxFeijo)
-						.addComponent(chckbxFeijoada_1)
-						.addComponent(chckbxSalada_1)
-						.addComponent(chckbxFarofa))
-					.addContainerGap(100, Short.MAX_VALUE))
+					.addGap(128)
+					.addComponent(splitPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txt, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(94, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(23)
-					.addComponent(chckbxNewCheckBox)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxFeijo)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxFeijoada_1)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxSalada_1)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(chckbxFarofa)
-					.addContainerGap(28, Short.MAX_VALUE))
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(txt, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel_2.createSequentialGroup()
+							.addGap(31)
+							.addComponent(splitPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(24, Short.MAX_VALUE))
 		);
 		panel_2.setLayout(gl_panel_2);
 		panel_1.setLayout(gl_panel_1);
@@ -300,7 +270,7 @@ public class FazerPedido extends JFrame {
 	
 	carregarCardapio();
 	selecionarLinha();
-
+    salvar();
 	
 	}
 
@@ -316,20 +286,22 @@ public class FazerPedido extends JFrame {
 	 * 
 	 * }); }
 	 */
+
 	private Cliente selecionarLinha() {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 1) {
+				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
 					cliente =  model.getCliente((table.getSelectedRow()));
-					System.out.println(cliente.getFkEndereco().getCep());
+					//System.out.println(cliente.getFkEndereco().getCep());
+					txt.append("nome:"+cliente.getNome()+"\n");
 				}
 			}
 
 		});
-	return cliente;
+		return cliente;
 	}
-	
+
 	private  String carregarCardapio() throws IOException {
 		stream = new FileInputStream("/opt/cardapio.txt");
 		reader = new InputStreamReader(stream);
@@ -347,10 +319,40 @@ public class FazerPedido extends JFrame {
 		return linha;
 	}
 
+	
+	private void salvar() {
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent eventoSalvar) {
+			cliente = selecionarLinha();
+				//List<Pedido> pedidos = new ArrayList<Pedido>();
+			Pedido pedido = new Pedido();	
+			
+			
+			
+			if (eventoSalvar.getSource() == btnSalvar) {
+				Cliente cliente2	=    dao.find(cliente.getCliente_identificador());
+				    pedido.setObservacao(comboBox.getSelectedItem().toString());
+				    cliente2.getPedidos().add(pedido);
+				    pedido.setCliente(cliente2);
+				    
+				    
+				    dao.salvar(pedido);
+				}
+				
+					
+			}}); 
+	}	
+
 
 	
-
-
+	
+	
+	
+	
+	
+	
+	
+	
 	public static void main(String[] args) throws IOException {
 		new FazerPedido();
 	}

@@ -349,13 +349,13 @@ public class CadastrarCliente extends JFrame {
 					endereco.setComplemento(txtComplemento.getText());
 					cliente.setFkEndereco(endereco);
 
-					Pedido pedido1 = new Pedido("1",cliente);
-					Pedido pedido2 = new Pedido("2",cliente);
-					Pedido pedido3 = new Pedido("1",cliente);
-					
-					cliente.getPedidos().add(pedido1);
-					cliente.getPedidos().add(pedido2);
-					cliente.getPedidos().add(pedido3);
+					/*
+					 * Pedido pedido1 = new Pedido("File de Frango"); Pedido pedido2 = new
+					 * Pedido("Bife Ancho"); Pedido pedido3 = new Pedido("Merluza");
+					 * 
+					 * cliente.getPedidos().add(pedido1); cliente.getPedidos().add(pedido2);
+					 * cliente.getPedidos().add(pedido3);
+					 */
 					
 					dao.salvar(cliente);
 

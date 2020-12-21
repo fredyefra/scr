@@ -21,15 +21,15 @@ public class Pedido implements Serializable {
 
 	private Long pedido_identificador;
 	private String observacao;
-    //private Cliente cliente = new Cliente();
+	private Cliente cliente = new Cliente();
 
 	public Pedido() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pedido(String observacao) {
+	public Pedido(String observacao, Cliente cliente) {
 		this.observacao = observacao;
-	    //this.cliente = cliente;
+		this.cliente = cliente;
 	}
 
 
@@ -53,16 +53,16 @@ public class Pedido implements Serializable {
 		this.observacao = observacao;
 	}
 
-	
-	/*
-	 * @ManyToOne(fetch = FetchType.LAZY, optional = false)
-	 * 
-	 * @JoinColumn(name = "cliente_id", nullable = false) public Cliente
-	 * getCliente() { return cliente; }
-	 * 
-	 * public void setCliente(Cliente cliente) { this.cliente = cliente; }
-	 */
-	
-	
-	
+
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "cliente_id", nullable = false) 
+	public Cliente getCliente() { return cliente; }
+
+	public void setCliente(Cliente cliente) { 
+		this.cliente = cliente; }
+
+
+
+
 }
