@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.Metamodel;
 
 import br.com.scr.model.Cliente;
 import br.com.scr.model.Pedido;
@@ -40,7 +41,6 @@ public class GenericDAO  {
 
 	}
 
-
 	public List<Cliente> findAll() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Cliente> cq = cb.createQuery(Cliente.class);
@@ -58,9 +58,35 @@ public class GenericDAO  {
 		em.getTransaction().begin();
 		em.getTransaction().commit();
 		//em.close();
-		
+
 		return cliente;
 	}
 
+	public List<Pedido> findAllPedidos(Long pedido_identificador) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Pedido> cq = cb.createQuery(Pedido.class);
+		Root<Pedido> pedido = cq.from(Pedido.class);
+		cq.select(pedido);
+
+		cq.select(pedido).where(cb.equal(pedido.get("cliente"), pedido_identificador));
+
+		TypedQuery<Pedido> query = em.createQuery(cq);
+
+		return query.getResultList();
+
+	}
+
+	public static void main(String[] args) {
+
+		List<Pedido> pedidos = new GenericDAO().findAllPedidos(1L);
+
+		for (Pedido pedido : pedidos) {
+			System.out.println(pedido.getPedido_identificador() + "--" + pedido.getCliente().getNome()
+					+ "--" + pedido.getObservacao());
+		}
+
+		System.out.println(pedidos.size());
+
+	}
 
 }

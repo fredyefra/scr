@@ -29,7 +29,7 @@ public class Pedido implements Serializable {
 
 	public Pedido(String observacao, Cliente cliente) {
 		this.observacao = observacao;
-		this.cliente = cliente;
+		//this.cliente = cliente;
 	}
 
 
@@ -53,16 +53,39 @@ public class Pedido implements Serializable {
 		this.observacao = observacao;
 	}
 
+	  @ManyToOne
+	  @JoinColumn(name = "cliente_identificador", nullable = false)
+	  public Cliente getCliente() { return cliente; }
+	  
+	  public void setCliente(Cliente cliente) { this.cliente = cliente; }
+	 
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((pedido_identificador == null) ? 0 : pedido_identificador.hashCode());
+		return result;
+	}
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "cliente_id", nullable = false) 
-	public Cliente getCliente() { return cliente; }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		Pedido other = (Pedido) obj;
+		return pedido_identificador != null && pedido_identificador.equals(other.getPedido_identificador());
+	}
 
-	public void setCliente(Cliente cliente) { 
-		this.cliente = cliente; }
+	@Override
+	public String toString() {
+		return "**** IDENTIFICADOR WEB SERVICE **** " + this + pedido_identificador;
+	}
 
-
-
+	
+	
 
 }

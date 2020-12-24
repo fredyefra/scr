@@ -1,6 +1,7 @@
 package br.com.scr.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
+
 @Entity
 @Table(name="tb_cliente")
 public class Cliente implements Serializable {
@@ -27,7 +30,7 @@ public class Cliente implements Serializable {
 	private String telefone;
 	private String email;
 	private Endereco fkEndereco = new Endereco();
-	private Set<Pedido> pedidos = new HashSet();
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
     //List<Pedido> pedidos = new ArrayList<Pedido>();
 
 	public Cliente() {
@@ -97,15 +100,43 @@ public class Cliente implements Serializable {
 	 * public void setPedidos(List<Pedido> pedidos) { this.pedidos = pedidos; }
 	 */
 	
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL) 
-	public Set<Pedido> getPedidos() { return pedidos; }
+	//@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL) 
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+	
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
-	public void setPedidos(Set<Pedido> pedidos) { 
-		this.pedidos = pedidos; }
+	
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cliente_identificador == null) ? 0 : cliente_identificador.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		return cliente_identificador != null && cliente_identificador.equals(other.getCliente_identificador());
+	}
 
 	@Override
 	public String toString() {
-		return nome;
+		return "**** IDENTIFICADOR WEB SERVICE **** " + this + cliente_identificador;
 	}
 
 }
