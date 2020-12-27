@@ -13,6 +13,7 @@ import javax.persistence.metamodel.Metamodel;
 
 import br.com.scr.model.Cliente;
 import br.com.scr.model.Pedido;
+import br.com.scr.model.Pedido_;
 import br.com.scr.util.PersistenceManager;
 
 public class GenericDAO  {
@@ -51,7 +52,6 @@ public class GenericDAO  {
 		return query.getResultList();
 	}
 
-
 	public Cliente find (Long pk) {
 
 		Cliente	cliente = em.find(Cliente.class, pk);
@@ -66,9 +66,8 @@ public class GenericDAO  {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Pedido> cq = cb.createQuery(Pedido.class);
 		Root<Pedido> pedido = cq.from(Pedido.class);
-		cq.select(pedido);
 
-		cq.select(pedido).where(cb.equal(pedido.get("cliente"), pedido_identificador));
+		cq.select(pedido).where(cb.equal(pedido.get(Pedido_.cliente), pedido_identificador));
 
 		TypedQuery<Pedido> query = em.createQuery(cq);
 

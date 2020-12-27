@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
@@ -229,8 +230,6 @@ public class FazerPedido extends JFrame {
 					.addContainerGap(30, Short.MAX_VALUE))
 		);
 		
-		JSplitPane splitPane = new JSplitPane();
-		
 		//txt = new JTextArea();
 		//txt.append("---------------------------------------------------------"+cliente.getNome());
 		
@@ -238,23 +237,16 @@ public class FazerPedido extends JFrame {
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGap(128)
-					.addComponent(splitPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addContainerGap()
 					.addComponent(txt, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(94, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(txt, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_2.createSequentialGroup()
-							.addGap(31)
-							.addComponent(splitPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(24, Short.MAX_VALUE))
+					.addContainerGap()
+					.addComponent(txt, GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		panel_2.setLayout(gl_panel_2);
 		panel_1.setLayout(gl_panel_1);
@@ -291,11 +283,18 @@ public class FazerPedido extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
-					cliente =  model.getCliente((table.getSelectedRow()));
-					//System.out.println(cliente.getFkEndereco().getCep());
-					txt.append("nome:"+cliente.getNome()+"\n");
-				}
+				
+			   try {
+				   if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
+						cliente =  model.getCliente((table.getSelectedRow()));
+						txt.append("nome:" +cliente.getNome()+"\n");
+				   }
+				   
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "SELECIONE O CLIENTE PARA FAZER O PEDIDO!"+JOptionPane.ERROR_MESSAGE);
+			} 
+					
+				
 			}
 
 		});
@@ -321,7 +320,7 @@ public class FazerPedido extends JFrame {
 
 	
 	private void salvar() {
-		btnSalvar.addActionListener(new ActionListener() {
+		    btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent eventoSalvar) {
 			cliente = selecionarLinha();
 				//List<Pedido> pedidos = new ArrayList<Pedido>();
@@ -329,16 +328,25 @@ public class FazerPedido extends JFrame {
 			
 			
 			
-			if (eventoSalvar.getSource() == btnSalvar) {
-				Cliente cliente2	=    dao.find(cliente.getCliente_identificador());
+			try {
+				if (eventoSalvar.getSource() == btnSalvar) {
+				    Cliente cliente2	=    dao.find(cliente.getCliente_identificador());
 				    pedido.setObservacao(comboBox.getSelectedItem().toString());
 				    cliente2.getPedidos().add(pedido);
 				    pedido.setCliente(cliente2);
 				    
-				    
 				    dao.salvar(pedido);
 				}
+			} catch (Exception e) {
 				
+				JOptionPane.showMessageDialog(null, "SELECIONE O CLIENTE PARA FAZER O PEDIDO!"+JOptionPane.ERROR_MESSAGE);
+			    
+			}
+			
+			finally {
+			     	
+			}
+			
 					
 			}}); 
 	}	
