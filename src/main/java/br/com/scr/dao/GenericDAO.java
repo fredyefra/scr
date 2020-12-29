@@ -9,11 +9,16 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.Metamodel;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import br.com.scr.model.Cliente;
 import br.com.scr.model.Pedido;
-import br.com.scr.model.Pedido_;
 import br.com.scr.util.PersistenceManager;
 
 public class GenericDAO  {
@@ -67,8 +72,15 @@ public class GenericDAO  {
 		CriteriaQuery<Pedido> cq = cb.createQuery(Pedido.class);
 		Root<Pedido> pedido = cq.from(Pedido.class);
 
-		cq.select(pedido).where(cb.equal(pedido.get(Pedido_.cliente), pedido_identificador));
+		/*
+		 * cq.select(pedido).where(cb.equal(pedido.get(Pedido_.cliente),
+		 * pedido_identificador));
+		 */
 
+
+		  cq.select(pedido).where(cb.equal(pedido.get("cliente"), pedido_identificador));
+		 
+		
 		TypedQuery<Pedido> query = em.createQuery(cq);
 
 		return query.getResultList();
@@ -77,15 +89,24 @@ public class GenericDAO  {
 
 	public static void main(String[] args) {
 
-		List<Pedido> pedidos = new GenericDAO().findAllPedidos(1L);
+		  JPanel middlePanel = new JPanel ();
+		  middlePanel.setBorder ( new TitledBorder ( new EtchedBorder (), "Display Area" ) );
 
-		for (Pedido pedido : pedidos) {
-			System.out.println(pedido.getPedido_identificador() + "--" + pedido.getCliente().getNome()
-					+ "--" + pedido.getObservacao());
-		}
+		  // create the middle panel components
 
-		System.out.println(pedidos.size());
+		  JTextArea display = new JTextArea ( 16, 58 );
+		  display.setEditable ( true ); // set textArea non-editable
+		  JScrollPane scroll = new JScrollPane ( display );
+		  scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 
-	}
+		  //Add Textarea in to middle panel
+		  middlePanel.add ( scroll );
 
+		  // My code
+		  JFrame frame = new JFrame ();
+		  frame.add ( middlePanel );
+		  frame.pack ();
+		  frame.setLocationRelativeTo ( null );
+		  frame.setVisible ( true );
 }
+	}

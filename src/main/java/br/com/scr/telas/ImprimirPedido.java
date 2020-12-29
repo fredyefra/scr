@@ -56,6 +56,9 @@ import br.com.scr.model.Cliente;
 import br.com.scr.model.Pedido;
 import br.com.scr.util.TabelaModel;
 import javax.swing.JSplitPane;
+import javax.swing.JTextPane;
+import javax.swing.JScrollBar;
+import javax.swing.border.BevelBorder;
 
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
@@ -66,7 +69,7 @@ public class ImprimirPedido extends JFrame {
 
 	private JPanel panel = new JPanel();
 	private GenericDAO dao = new GenericDAO();
-	private JScrollPane scroller;
+	//private JScrollPane scroller;
 	private TabelaModel model;
 	private Container tela;
 	private JFrame frame = new JFrame();
@@ -79,7 +82,7 @@ public class ImprimirPedido extends JFrame {
     protected BufferedReader br;
 	protected String linha;
 	protected JComboBox comboBox = new JComboBox();
-	//protected private GenericDAO dao = new GenericDAO();
+	protected JScrollPane scroller;
 	
 	public ImprimirPedido() throws IOException {
 
@@ -101,61 +104,73 @@ public class ImprimirPedido extends JFrame {
 		JPanel bannerPanel = new JPanel();
 		bannerPanel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		
+		JTextArea textArea = new JTextArea(10, 20); //Rows and cols to be displayed
+        textArea.setWrapStyleWord(true);
+		textArea.setLineWrap(true);
+        //scroller = new JScrollPane(textArea);
+		
+		
 		JLabel jLabel = new JLabel();
-		jLabel.setIcon(new ImageIcon("restaurant-3-32.png"));
+		jLabel.setIcon(new ImageIcon("printer-32.png"));
 		jLabel.setText("IMPRIMIR PEDIDO");
 		jLabel.setForeground(Color.WHITE);
 		jLabel.setFont(new Font("Dialog", Font.BOLD, 36));
 		bannerPanel.add(jLabel);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "CARD\u00C1PIO", TitledBorder.LEFT, TitledBorder.ABOVE_TOP, null, new Color(51, 51, 51)));
 		
 		
-		
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(bannerPanel, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
-					.addGap(22))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(22))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(6)
-					.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-					.addGap(199)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
-					.addGap(271))
-		);
-		
-		JSlider slider = new JSlider();
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 1322, Short.MAX_VALUE)
-		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 176, Short.MAX_VALUE)
-		);
-		panel_1.setLayout(gl_panel_1);
-
-						frame.getContentPane().setLayout(groupLayout);
 
 						tela = frame.getContentPane();
+						GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+						groupLayout.setHorizontalGroup(
+							groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(12)
+											.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 1332, GroupLayout.PREFERRED_SIZE))
+										.addGroup(groupLayout.createSequentialGroup()
+											.addGap(107)
+											.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 886, GroupLayout.PREFERRED_SIZE)))
+									.addContainerGap(22, Short.MAX_VALUE))
+						);
+						groupLayout.setVerticalGroup(
+							groupLayout.createParallelGroup(Alignment.LEADING)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(6)
+									.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+									.addGap(80)
+									.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+									.addGap(257))
+						);
+						
+						JScrollPane scrollPane = new JScrollPane(textArea);
+						scrollPane.setViewportBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+						GroupLayout gl_panel_1 = new GroupLayout(panel_1);
+						
+						gl_panel_1.setHorizontalGroup(
+							gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 832, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap(42, Short.MAX_VALUE))
+						);
+						gl_panel_1.setVerticalGroup(
+							gl_panel_1.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel_1.createSequentialGroup()
+									.addGap(45)
+									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 258, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap(29, Short.MAX_VALUE))
+						);
+						panel_1.setLayout(gl_panel_1);
+						frame.getContentPane().setLayout(groupLayout);
 
 
 						frame.setVisible(true);
 						frame.setLocationRelativeTo(null);
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+	                    //frame.add(scroller);
 	
 	
 	}

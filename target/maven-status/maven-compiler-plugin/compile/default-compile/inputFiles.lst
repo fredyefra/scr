@@ -40,7 +40,6 @@
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ServicoERP.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/EnderecoERP.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/dao/IGenericDAO.java
-/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/model/Pedido_.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/VigenciaERP.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ObjetoSimplificado.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/Produto.java
@@ -51,7 +50,6 @@
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/AtendeClienteServiceSoapBindingStub.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/Acao.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/telas/CadastrarCliente.java
-/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/model/Cliente_.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/MensagemParametrizadaTO.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/Coleta.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/Remetente.java
@@ -67,7 +65,6 @@
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/RetornoCancelamento.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/TipoMensagem.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ObjetoPostalPK.java
-/opt/eclipse_teste/workspace/scr/src/main/java/br/com/scr/model/Endereco_.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/UnidadePostagemERP.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/UsuarioInstalacao.java
 /opt/eclipse_teste/workspace/scr/src/main/java/br/com/correios/bsb/sigep/master/bean/cliente/ValePostal.java
