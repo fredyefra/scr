@@ -103,10 +103,6 @@ public class ImprimirPedido extends JFrame {
 		
 		JPanel bannerPanel = new JPanel();
 		bannerPanel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
-		
-		JTextArea textArea = new JTextArea(10, 20); //Rows and cols to be displayed
-        textArea.setWrapStyleWord(true);
-		textArea.setLineWrap(true);
         //scroller = new JScrollPane(textArea);
 		
 		
@@ -118,51 +114,57 @@ public class ImprimirPedido extends JFrame {
 		bannerPanel.add(jLabel);
 		
 		JPanel panel_1 = new JPanel();
-		
+		//panel_1.setBackground(new Color(245,245,220));
 		
 
 						tela = frame.getContentPane();
 						GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 						groupLayout.setHorizontalGroup(
-							groupLayout.createParallelGroup(Alignment.LEADING)
+							groupLayout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addGroup(groupLayout.createSequentialGroup()
 											.addGap(12)
 											.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 1332, GroupLayout.PREFERRED_SIZE))
 										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(107)
-											.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 886, GroupLayout.PREFERRED_SIZE)))
-									.addContainerGap(22, Short.MAX_VALUE))
+											.addGap(297)
+											.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
+											.addGap(161)))
+									.addGap(22))
 						);
 						groupLayout.setVerticalGroup(
 							groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(6)
 									.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
-									.addGap(80)
-									.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
-									.addGap(257))
+									.addGap(18)
+									.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 429, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap(222, Short.MAX_VALUE))
 						);
 						
-						JScrollPane scrollPane = new JScrollPane(textArea);
+						JScrollPane scrollPane = new JScrollPane();
 						scrollPane.setViewportBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 						GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-						
 						gl_panel_1.setHorizontalGroup(
 							gl_panel_1.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_1.createSequentialGroup()
-									.addContainerGap()
-									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 832, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap(42, Short.MAX_VALUE))
+									.addGap(197)
+									.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+									.addGap(199))
 						);
 						gl_panel_1.setVerticalGroup(
 							gl_panel_1.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_1.createSequentialGroup()
-									.addGap(45)
-									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 258, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap(29, Short.MAX_VALUE))
+									.addContainerGap()
+									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap(63, Short.MAX_VALUE))
 						);
+						
+						JTextArea textArea = new JTextArea(10, 20);
+						textArea.setBackground(new Color(245,245,220));
+						scrollPane.setViewportView(textArea);
+						textArea.setWrapStyleWord(true);
+						textArea.setLineWrap(true);
 						panel_1.setLayout(gl_panel_1);
 						frame.getContentPane().setLayout(groupLayout);
 
