@@ -77,7 +77,6 @@ public class FazerPedido extends JFrame {
 		table.setBackground(new Color(255, 255, 255));
 
 		frame = new JFrame();
-		// tela = frame.getContentPane();
 
 		panel = new JPanel();
 		panel.setBackground(new java.awt.Color(238, 238, 238));
@@ -88,7 +87,7 @@ public class FazerPedido extends JFrame {
 		frame.setSize(1366, 780);
 		panel.setLayout(new BorderLayout(0, 0));
 
-		JScrollPane scroller = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+		JScrollPane scrollerTable = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		// scroller.setViewportView(table);
@@ -134,8 +133,8 @@ public class FazerPedido extends JFrame {
 		jLabel.setFont(new Font("Dialog", Font.BOLD, 36));
 		bannerPanel.add(jLabel);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "CARD\u00C1PIO", TitledBorder.LEFT, TitledBorder.ABOVE_TOP, null, new Color(51, 51, 51)));
+		JPanel panelCadarpio = new JPanel();
+		panelCadarpio.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "CARD\u00C1PIO", TitledBorder.LEFT, TitledBorder.ABOVE_TOP, null, new Color(51, 51, 51)));
 		
 		
 		
@@ -149,11 +148,11 @@ public class FazerPedido extends JFrame {
 					.addGap(22))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scroller, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
+					.addComponent(scrollerTable, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
 					.addGap(22))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
+					.addComponent(panelCadarpio, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
 					.addGap(22))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(449)
@@ -167,9 +166,9 @@ public class FazerPedido extends JFrame {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 					.addGap(31)
-					.addComponent(scroller, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scrollerTable, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panelCadarpio, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
 					.addGap(59)
 					.addComponent(btnSalvar)
 					.addGap(187))
@@ -211,27 +210,24 @@ public class FazerPedido extends JFrame {
 		panel_2_1_1.setLayout(gl_panel_2_1_1);
 		
 		JPanel panel_2 = new JPanel();
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
+		GroupLayout gl_panelCadarpio = new GroupLayout(panelCadarpio);
+		gl_panelCadarpio.setHorizontalGroup(
+			gl_panelCadarpio.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCadarpio.createSequentialGroup()
 					.addGap(24)
 					.addComponent(panel_2_1_1, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
 					.addGap(41)
 					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
 					.addContainerGap())
 		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING, false)
+		gl_panelCadarpio.setVerticalGroup(
+			gl_panelCadarpio.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCadarpio.createSequentialGroup()
+					.addGroup(gl_panelCadarpio.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(panel_2_1_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 146, Short.MAX_VALUE))
 					.addContainerGap(30, Short.MAX_VALUE))
 		);
-		
-		//txt = new JTextArea();
-		//txt.append("---------------------------------------------------------"+cliente.getNome());
 		
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
@@ -249,7 +245,7 @@ public class FazerPedido extends JFrame {
 					.addContainerGap())
 		);
 		panel_2.setLayout(gl_panel_2);
-		panel_1.setLayout(gl_panel_1);
+		panelCadarpio.setLayout(gl_panelCadarpio);
 
 						frame.getContentPane().setLayout(groupLayout);
 
@@ -361,7 +357,8 @@ public class FazerPedido extends JFrame {
 	
 	
 	
-	public static void main(String[] args) throws IOException {
-		new FazerPedido();
-	}
+	/*
+	 * public static void main(String[] args) throws IOException { new
+	 * FazerPedido(); }
+	 */
 }

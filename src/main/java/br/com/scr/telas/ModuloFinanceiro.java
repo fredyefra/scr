@@ -1,20 +1,17 @@
 package br.com.scr.telas;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.print.DocFlavor;
@@ -26,44 +23,34 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.JobName;
-import javax.print.attribute.standard.MediaSize;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
 
 import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
-import br.com.scr.model.Pedido;
 import br.com.scr.util.TabelaModel;
-import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
-import javax.swing.JScrollBar;
-import javax.swing.border.BevelBorder;
 
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
  */
-public class ImprimirPedido extends JFrame {
+public class ModuloFinanceiro extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -72,9 +59,7 @@ public class ImprimirPedido extends JFrame {
 	private TabelaModel model;
 	private Container tela;
 	private JFrame frame = new JFrame();
-    
    
-	
 	protected Cliente cliente = new Cliente();
 	protected  FileInputStream stream;
 	protected InputStreamReader reader;
@@ -83,7 +68,15 @@ public class ImprimirPedido extends JFrame {
 	protected JComboBox comboBox = new JComboBox();
 	protected JScrollPane scroller;
 	
-	public ImprimirPedido() throws IOException {
+	private JMenuBar menuBar1 = new JMenuBar();
+	private JMenu JModuloCliente = new JMenu();
+	private JMenuItem jMenuItemCadastrarCliente = new JMenuItem();
+	
+	private JMenuBar menuBar2 = new JMenuBar();
+	private JMenu JModuloPedido = new JMenu();
+	private JMenuItem jMenuItemFazerpedido = new JMenuItem();
+	
+	public ModuloFinanceiro() throws IOException {
 
 		List<Cliente> clientes = new GenericDAO().findAll();
 		model = new TabelaModel(clientes);
@@ -99,15 +92,12 @@ public class ImprimirPedido extends JFrame {
 	    centralizado.setHorizontalAlignment(SwingConstants.CENTER);   
 	    direita.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		
 		JPanel bannerPanel = new JPanel();
 		bannerPanel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
-        //scroller = new JScrollPane(textArea);
-		
-		
+        
 		JLabel jLabel = new JLabel();
-		jLabel.setIcon(new ImageIcon("printer-32.png"));
-		jLabel.setText("IMPRIMIR PEDIDO");
+		jLabel.setIcon(new ImageIcon("us-dollar-32.png"));
+		jLabel.setText("CONTROLE FINANCEIRO");
 		jLabel.setForeground(Color.WHITE);
 		jLabel.setFont(new Font("Dialog", Font.BOLD, 36));
 		bannerPanel.add(jLabel);
@@ -171,32 +161,72 @@ public class ImprimirPedido extends JFrame {
 						frame.setVisible(true);
 						frame.setLocationRelativeTo(null);
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	                    //frame.add(scroller);
+						
+						
+						frame.setJMenuBar(menuBar1);
+						
+						JModuloCliente.setText("MÓDULO CLIENTE");
+						menuBar1.add(JModuloCliente);
+						
+						jMenuItemCadastrarCliente.setText("Cadastrar Cliente");
+						JModuloCliente.add(jMenuItemCadastrarCliente);
+						
+						menuBar1.add(menuBar2);
+						
+						JModuloPedido.setText("MÓDULO PEDIDO");
+						menuBar2.add(JModuloPedido);
+						
+						jMenuItemFazerpedido.setText("Fazer Pedido");
+						JModuloPedido.add(jMenuItemFazerpedido);
+	                    
+						eventoCadastrarCliente();
+						eventoFazerPedido();
+	}
+
+	private void eventoCadastrarCliente() {
+
+		jMenuItemCadastrarCliente.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent evento) {
+
+				if (evento.getSource() == jMenuItemCadastrarCliente) {
+                    
+					try {
+						frame.dispose();
+						new CadastrarCliente2();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}	
+			}
+		});
+	}
 	
-	
+	private void eventoFazerPedido() {
+
+		jMenuItemFazerpedido.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent evento) {
+
+				if (evento.getSource() == jMenuItemFazerpedido) {
+
+					try {
+						frame.dispose();
+						new FazerPedido();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}	
+			}
+		});
 	}
 
 
-	private void nota(Long num) {
-
-		//List<Pedido> pedidos = dao.findAllPedidos(2L);
-		
-		String imprimir= "";
-		
-		/*
-		 * for (int i = 0; i < pedidos.size(); i++) { imprimir +=
-		 * pedidos.get(i).getPedido_identificador() + " " +
-		 * pedidos.get(i).getObservacao() + " " + pedidos.get(i).getCliente().getNome();
-		 * 
-		 * 
-		 * }
-		 */
-		  
-		  
-		  System.out.println(imprimir);
-		 
-	}
-
+	
+	
 	
 	public void imprimir(String nota) {
 	 try {
@@ -226,10 +256,6 @@ public class ImprimirPedido extends JFrame {
 	    
 	}
 	
-
-	
-	
-	
 	
 	public static void main(String[] args) throws IOException {
 		
@@ -238,7 +264,7 @@ public class ImprimirPedido extends JFrame {
 		//List<Pedido> pedidos = dao.findAllPedidos(2L);
 		
 		
-		new ImprimirPedido().nota(2L);
+		new ModuloFinanceiro();
 	
 	
 	}
