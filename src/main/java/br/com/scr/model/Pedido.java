@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,18 +19,17 @@ public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long pedido_identificador;
-	private String observacao;
-	private Cliente cliente = new Cliente();
+	private String marmita;
+	private Cliente fkCliente = new Cliente();
 
 	public Pedido() {
-		// TODO Auto-generated constructor stub
+
 	}
 
-	public Pedido(String observacao, Cliente cliente) {
-		this.observacao = observacao;
-		//this.cliente = cliente;
+	public Pedido(String marmita, Cliente fkCliente) {
+		this.marmita = marmita;
+		this.fkCliente = fkCliente;
 	}
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,22 +42,29 @@ public class Pedido implements Serializable {
 		this.pedido_identificador = pedido_identificador;
 	}
 
-	@Column(name="observacao")
-	public String getObservacao() {
-		return observacao;
+	@Column(name="marmita")
+	public String getMarmita() {
+		return marmita;
 	}
 
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
+	public void setMarmita(String marmita) {
+		this.marmita = marmita;
 	}
 
-	  @ManyToOne
-	  @JoinColumn(name = "cliente_identificador", nullable = false)
-	  public Cliente getCliente() { return cliente; }
-	  
-	  public void setCliente(Cliente cliente) { this.cliente = cliente; }
-	 
 
+	@ManyToOne
+	@JoinColumn(name = "fkCliente", nullable = false)
+	public Cliente getFkCliente() {
+		return fkCliente;
+	}
+
+	public void setFkCliente(Cliente fkCliente) {
+		this.fkCliente = fkCliente;
+	}
+
+	
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -68,6 +73,7 @@ public class Pedido implements Serializable {
 		return result;
 	}
 
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,8 +90,5 @@ public class Pedido implements Serializable {
 	public String toString() {
 		return "**** IDENTIFICADOR WEB SERVICE **** " + this + pedido_identificador;
 	}
-
-	
-	
 
 }

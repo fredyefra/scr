@@ -101,7 +101,7 @@ public class Cliente implements Serializable {
 	 */
 	
 	//@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL) 
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "fkCliente", fetch = FetchType.LAZY)
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}

@@ -73,7 +73,7 @@ public class ImprimirPedido extends JFrame {
 	private Container tela;
 	private JFrame frame = new JFrame();
     
-   
+    protected  String imprimir;
 	
 	protected Cliente cliente = new Cliente();
 	protected  FileInputStream stream;
@@ -82,6 +82,8 @@ public class ImprimirPedido extends JFrame {
 	protected String linha;
 	protected JComboBox comboBox = new JComboBox();
 	protected JScrollPane scroller;
+	
+	private JTextArea textArea = new JTextArea(10, 20);
 	
 	public ImprimirPedido() throws IOException {
 
@@ -159,11 +161,14 @@ public class ImprimirPedido extends JFrame {
 									.addContainerGap(63, Short.MAX_VALUE))
 						);
 						
-						JTextArea textArea = new JTextArea(10, 20);
+						
 						textArea.setBackground(new Color(245,245,220));
 						scrollPane.setViewportView(textArea);
+						textArea.setEditable(false);
 						textArea.setWrapStyleWord(true);
 						textArea.setLineWrap(true);
+						textArea.append(nota(1L));
+								
 						panel_1.setLayout(gl_panel_1);
 						frame.getContentPane().setLayout(groupLayout);
 
@@ -171,34 +176,54 @@ public class ImprimirPedido extends JFrame {
 						frame.setVisible(true);
 						frame.setLocationRelativeTo(null);
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	                    //frame.add(scroller);
+	                    
 	
 	
 	}
 
 
-	private void nota(Long num) {
+	private String nota(Long num) {
 
-		//List<Pedido> pedidos = dao.findAllPedidos(2L);
+		List<Pedido> pedidos = dao.findAllPedidos(1L);
 		
-		String imprimir= "";
+		String conteudoImprimir = "";
 		
-		/*
-		 * for (int i = 0; i < pedidos.size(); i++) { imprimir +=
-		 * pedidos.get(i).getPedido_identificador() + " " +
-		 * pedidos.get(i).getObservacao() + " " + pedidos.get(i).getCliente().getNome();
-		 * 
-		 * 
-		 * }
-		 */
+		Pedido pedido2 = null;
+		
+		
+		  for (int i = 0; i < pedidos.size(); i++) { 
+		      
+		  
+		  }
+		  
+		  for (Pedido pedido : pedidos) {
+			  conteudoImprimir += pedido.getMarmita()+"\n";
+			  pedido2 = pedido;
+		  }
 		  
 		  
-		  System.out.println(imprimir);
-		 
+		  
+		  
+		  imprimir = "------------------------------------------------------------------------------------------------------------------------\n\r"
+		  		+ "CNPJ: 000000000000 COMERCIO DE ALIMENTOS XYZ\n"
+		  		+ "ENDEREÇO: QS 09 LOJA 02 LT 3/4  \n"
+		  		+ "------------------------------------------------------------------------------------------------------------------------\n\r"
+		  		+ "CLIENTE:"+pedido2.getFkCliente().getNome()        +"   TELEFONE:"+pedido2.getFkCliente().getTelefone() +"\n\n"      
+		  		+ "DESC                             PREÇO UN"
+		  		+ " ------------------------------------------------------------------------------------------------------------------------\r"
+		  		+"\r"+conteudoImprimir+"\n"
+		  		+ " \r "
+		  		+ "________________________________________________________________________________\n"
+		  		+ "    QTD TOTAL                                                  VALOR TOTAL\n"
+		  		+ "     04                                                              R$ 24,00";
+		  
+		  
+		//System.out.println(imprimir); 
+	    return imprimir;
 	}
 
 	
-	public void imprimir(String nota) {
+	private void imprimir1(String nota) {
 	 try {
 		InputStream stream = new ByteArrayInputStream(nota.getBytes());
 	    DocFlavor docFlavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
@@ -238,7 +263,7 @@ public class ImprimirPedido extends JFrame {
 		//List<Pedido> pedidos = dao.findAllPedidos(2L);
 		
 		
-		new ImprimirPedido().nota(2L);
+		new ImprimirPedido().nota(1L);
 	
 	
 	}

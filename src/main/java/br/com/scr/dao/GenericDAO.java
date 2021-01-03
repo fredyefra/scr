@@ -72,41 +72,23 @@ public class GenericDAO  {
 		CriteriaQuery<Pedido> cq = cb.createQuery(Pedido.class);
 		Root<Pedido> pedido = cq.from(Pedido.class);
 
-		/*
-		 * cq.select(pedido).where(cb.equal(pedido.get(Pedido_.cliente),
-		 * pedido_identificador));
-		 */
-
-
-		  cq.select(pedido).where(cb.equal(pedido.get("cliente"), pedido_identificador));
-		 
+		cq.select(pedido).where(cb.equal(pedido.get("fkCliente"), pedido_identificador));
 		
 		TypedQuery<Pedido> query = em.createQuery(cq);
 
 		return query.getResultList();
-
-	}
+    }
 
 	public static void main(String[] args) {
 
-		  JPanel middlePanel = new JPanel ();
-		  middlePanel.setBorder ( new TitledBorder ( new EtchedBorder (), "Display Area" ) );
-
-		  // create the middle panel components
-
-		  JTextArea display = new JTextArea ( 16, 58 );
-		  display.setEditable ( true ); // set textArea non-editable
-		  JScrollPane scroll = new JScrollPane ( display );
-		  scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
-
-		  //Add Textarea in to middle panel
-		  middlePanel.add ( scroll );
-
-		  // My code
-		  JFrame frame = new JFrame ();
-		  frame.add ( middlePanel );
-		  frame.pack ();
-		  frame.setLocationRelativeTo ( null );
-		  frame.setVisible ( true );
-}
+		 List<Pedido> findAllPedidos = new GenericDAO().findAllPedidos(1L);
+         
+		 for (Pedido pedido : findAllPedidos) {
+			 //System.out.println(pedido.get().getCliente_identificador() + " - " + pedido.getCliente().getNome() + " - " + pedido.getPedido_identificador() + " - " + pedido.getObservacao()  );	
+		 }
+		 
+		 
+		 
+	
+	}
 	}
