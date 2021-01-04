@@ -328,6 +328,7 @@ public class FazerPedido extends JFrame {
 				if (eventoSalvar.getSource() == btnSalvar) {
 				    Cliente cliente2	=    dao.find(cliente.getCliente_identificador());
 				    pedido.setMarmita(comboBox.getSelectedItem().toString());
+				    pedido.setPreco(5F);
 				    cliente2.getPedidos().add(pedido);
 				    pedido.setFkCliente(cliente2);
 				    

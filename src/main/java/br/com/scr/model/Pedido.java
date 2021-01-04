@@ -1,6 +1,8 @@
 package br.com.scr.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +22,12 @@ public class Pedido implements Serializable {
 
 	private Long pedido_identificador;
 	private String marmita;
+	private Float preco;
+	private String observacao;
+	private Integer quantidade;
+	//private enum formaPagamento(Dinheiro,Cartão);
+	//private enum statusPedido(Aberto,Encerrado);
+	//private Date dataHoraPedido;
 	private Cliente fkCliente = new Cliente();
 
 	public Pedido() {
@@ -51,6 +59,23 @@ public class Pedido implements Serializable {
 		this.marmita = marmita;
 	}
 
+	@Column(name="valor",scale=2,precision=12)
+	public Float getPreco() {
+		return preco;
+	}
+
+	public void setPreco(Float preco) {
+		this.preco = preco;
+	}
+
+	@Column(name="observacao")
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "fkCliente", nullable = false)
