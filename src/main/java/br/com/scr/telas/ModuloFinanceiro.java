@@ -75,8 +75,9 @@ public class ModuloFinanceiro extends JFrame {
 	private JMenuBar menuBar2 = new JMenuBar();
 	private JMenu JModuloPedido = new JMenu();
 	private JMenuItem jMenuItemFazerpedido = new JMenuItem();
+	private final JMenuItem jMenuItemPedidosRealizados = new JMenuItem("Pedidos Realizados");
 	
-	public ModuloFinanceiro() throws IOException {
+	public ModuloFinanceiro() {
 
 		List<Cliente> clientes = new GenericDAO().findAll();
 		model = new TabelaModel(clientes);
@@ -178,6 +179,9 @@ public class ModuloFinanceiro extends JFrame {
 						
 						jMenuItemFazerpedido.setText("Fazer Pedido");
 						JModuloPedido.add(jMenuItemFazerpedido);
+						jMenuItemPedidosRealizados.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/add-user-24.png")));
+						
+						JModuloPedido.add(jMenuItemPedidosRealizados);
 	                    
 						eventoCadastrarCliente();
 						eventoFazerPedido();

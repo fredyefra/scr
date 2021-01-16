@@ -25,7 +25,7 @@ public class Pedido implements Serializable {
 	private Float preco;
 	private String observacao;
 	private Integer quantidade;
-	//private enum formaPagamento(Dinheiro,Cartão);
+	private String formaPagamento;
 	//private enum statusPedido(Aberto,Encerrado);
 	//private Date dataHoraPedido;
 	private Cliente fkCliente = new Cliente();
@@ -59,6 +59,15 @@ public class Pedido implements Serializable {
 		this.marmita = marmita;
 	}
 
+	@Column(name="quantidade")
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+
 	@Column(name="valor",scale=2,precision=12)
 	public Float getPreco() {
 		return preco;
@@ -66,6 +75,15 @@ public class Pedido implements Serializable {
 
 	public void setPreco(Float preco) {
 		this.preco = preco;
+	}
+
+	@Column(name="formaPagamento")
+	public String getFormaPagamento() {
+		return formaPagamento;
+	}
+
+	public void setFormaPagamento(String formaPagamento) {
+		this.formaPagamento = formaPagamento;
 	}
 
 	@Column(name="observacao")

@@ -14,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
 
@@ -168,7 +170,6 @@ public class ImprimirPedido extends JFrame {
 						textArea.setWrapStyleWord(true);
 						textArea.setLineWrap(true);
 						textArea.append(nota(1L));
-						//textArea.setFont(new Font("Arial Black", Font.BOLD, 12));
 						
 						panel_1.setLayout(gl_panel_1);
 						frame.getContentPane().setLayout(groupLayout);
@@ -194,35 +195,32 @@ public class ImprimirPedido extends JFrame {
 		Pedido pedido2 = null;
 		
 		for (Pedido pedido : pedidos) {
-			   conteudoImprimir += pedido.getPedido_identificador() + "    "+ 
-		                           pedido.getPreco()  + "     "+  
+			   conteudoImprimir += pedido.getQuantidade() + "    "+ 
+		                           pedido.getPreco()  + "        "+  
 			                       pedido.getMarmita()+ "\n\r";
 			   pedido2 = pedido;
-		       total += pedido.getPreco();  
+		       total += (pedido.getPreco()*pedido.getQuantidade());  
 		       
 		}
-		  
-		  
-		  
 		  
 		  imprimir = "------------------------------------------------------------------------------------------------------------------------\n\r"
 		  		+ "CNPJ: 000000000000 COMERCIO DE ALIMENTOS XYZ\n"
 		  		+ "ENDEREÇO: QS 09 LOJA 02 LT 3/4  \n"
 		  		+ "------------------------------------------------------------------------------------------------------------------------\n\r"
 		  		+ "CLIENTE: " + pedido2.getFkCliente().getNome()        +"       TELEFONE: " + pedido2.getFkCliente().getTelefone() +"\n\n"      
-		  		+ "QTD  VALOR  DESCRIÇÃO "
+		  		+ "QTD  VALOR  DESCRIÇÃO  "
 		  		+ " ------------------------------------------------------------------------------------------------------------------------\r"
 		  		+"\r"+conteudoImprimir+"\n"
 		  		+ " \r "
 		  		+ "_________________________________________________________________________\n"
-		  		+ "\nTOTAL DE ITENS:                                                                                   "+ pedidos.size() + "  \n"
-		  		+  "TOTAL  R$:                                                                                         "+ total
-		  		+  "\nFORMA DE PAGAMENTO:                                                                              DINHEIRO";
+		  		+ "\nTOTAL DE ITENS:                                                                                     "+pedidos.size() 
+		  		+  "\nTOTAL  R$:                                                                                         "+total
+		  		+  "\nFORMA DE PAGAMENTO:                                                             "+pedido2.getFormaPagamento()
+		  		+  "";
 		  		
 		  
-		  
-		//System.out.println(imprimir); 
-	    return imprimir;
+		return imprimir;
+	
 	}
 
 	

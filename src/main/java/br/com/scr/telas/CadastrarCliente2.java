@@ -88,7 +88,7 @@ public class CadastrarCliente2 extends JFrame {
 		
 		
 		JLabel jLabel = new JLabel();
-		jLabel.setIcon(new ImageIcon("printer-32.png"));
+		jLabel.setIcon(new ImageIcon("dd-user-2-32.png"));
 		jLabel.setText("CADASTRAR CLIENTE 2");
 		jLabel.setForeground(Color.WHITE);
 		jLabel.setFont(new Font("Dialog", Font.BOLD, 36));
@@ -102,18 +102,19 @@ public class CadastrarCliente2 extends JFrame {
 						//tela = frame.getContentPane();
 						
 						JPanel panelButton = new JPanel();
+						
 						GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 						groupLayout.setHorizontalGroup(
-							groupLayout.createParallelGroup(Alignment.TRAILING)
+							groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(12)
 									.addComponent(panelBanner, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
 									.addGap(22))
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createSequentialGroup()
 									.addContainerGap(52, Short.MAX_VALUE)
 									.addComponent(panelBody, GroupLayout.PREFERRED_SIZE, 1258, GroupLayout.PREFERRED_SIZE)
 									.addGap(56))
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(318)
 									.addComponent(panelButton, GroupLayout.PREFERRED_SIZE, 687, GroupLayout.PREFERRED_SIZE)
 									.addContainerGap(361, Short.MAX_VALUE))
@@ -138,9 +139,6 @@ public class CadastrarCliente2 extends JFrame {
 						btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 12));
 						btnCancelar.setIcon(new ImageIcon("x-mark-16.png"));
 
-						
-						
-						
 						
 						GroupLayout gl_panelButton = new GroupLayout(panelButton);
 						gl_panelButton.setHorizontalGroup(
@@ -328,13 +326,8 @@ public class CadastrarCliente2 extends JFrame {
 			public void actionPerformed(ActionEvent eventoCancelar) {
 
 				if (eventoCancelar.getSource() == btnCancelar) {
-					try {
-				    	frame.dispose();
-				    	new ModuloFinanceiro();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
+					frame.dispose();
+			    	new ModuloFinanceiro(); 
 				}	
 			}}); 
 	}

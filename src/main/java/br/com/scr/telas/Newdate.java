@@ -49,7 +49,7 @@ public class Newdate implements Runnable {
                 minutes = cal.get(Calendar.MINUTE);
                 seconds = cal.get(Calendar.SECOND);
 
-                SimpleDateFormat formatter = new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss");
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
                 Date date = cal.getTime();
                 timeString = formatter.format(date);
 
@@ -62,7 +62,7 @@ public class Newdate implements Runnable {
     }
 
     public void printTime() {
-        b.setText(timeString);
+        b.setText(timeString.toUpperCase());
     }
 
     public static void main(String[] args) {

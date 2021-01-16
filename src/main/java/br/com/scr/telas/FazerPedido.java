@@ -24,9 +24,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -40,7 +39,6 @@ import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
 import br.com.scr.model.Pedido;
 import br.com.scr.util.TabelaModel;
-import javax.swing.JSplitPane;
 
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
@@ -56,18 +54,22 @@ public class FazerPedido extends JFrame {
 	private JTable table;
 	private Container tela;
 	private JFrame frame = new JFrame();
-    
-   
 	
 	protected Cliente cliente = new Cliente();
 	protected  FileInputStream stream;
 	protected InputStreamReader reader;
     protected BufferedReader br;
 	protected String linha;
-	protected JComboBox comboBox = new JComboBox();
-	protected JTextArea txt = new JTextArea();
-	protected JButton btnSalvar = new JButton("SALVAR");
-	//protected private GenericDAO dao = new GenericDAO();
+	private JComboBox comboBox = new JComboBox();
+	private JComboBox comboBoxFormaPagamento = new JComboBox();
+	private JButton btnSalvar = new JButton();
+	private JButton btnCancelar = new JButton();
+	private JTextField txtMarmita;
+	
+	private final Integer  quantidade [] ={1,2,3,4,5,6,7,8,9,10};
+	private final String   formaPagamento [] ={"DINHEIRO","CARTÃO"};
+	
+	private JTextField txtPreco;
 	
 	public FazerPedido() throws IOException {
 
@@ -89,8 +91,6 @@ public class FazerPedido extends JFrame {
 
 		JScrollPane scrollerTable = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-		// scroller.setViewportView(table);
 
 		JTableHeader header = table.getTableHeader();
 	    header.setBackground(new java.awt.Color(99,130,191));
@@ -136,7 +136,13 @@ public class FazerPedido extends JFrame {
 		JPanel panelCadarpio = new JPanel();
 		panelCadarpio.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "CARD\u00C1PIO", TitledBorder.LEFT, TitledBorder.ABOVE_TOP, null, new Color(51, 51, 51)));
 		
+		btnSalvar.setText("SALVAR");
+		btnSalvar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnSalvar.setIcon(new ImageIcon("arrow-203-16.png"));
 		
+		btnCancelar.setText("CANCELAR");
+		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnCancelar.setIcon(new ImageIcon("x-mark-16.png"));
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -155,9 +161,11 @@ public class FazerPedido extends JFrame {
 					.addComponent(panelCadarpio, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
 					.addGap(22))
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(449)
-					.addComponent(btnSalvar)
-					.addContainerGap(800, Short.MAX_VALUE))
+					.addGap(566)
+					.addComponent(btnSalvar, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+					.addGap(50)
+					.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(491, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -168,83 +176,77 @@ public class FazerPedido extends JFrame {
 					.addGap(31)
 					.addComponent(scrollerTable, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
-					.addComponent(panelCadarpio, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
-					.addGap(59)
-					.addComponent(btnSalvar)
+					.addComponent(panelCadarpio, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnSalvar)
+						.addComponent(btnCancelar))
 					.addGap(187))
 		);
 		
-		JPanel panel_2_1_1 = new JPanel();
-		
-		comboBox = new JComboBox();
-		
-		JSlider slider = new JSlider();
-		slider = new JSlider(0, 200, 0);
-        slider.setMinorTickSpacing(5);
-        slider.setMajorTickSpacing(25);
-        slider.setPaintLabels(true);
-        //slider.setOrientation(SwingConstants.VERTICAL);
-        slider.setPaintTicks(true);
-        //add(slider, BorderLayout.CENTER);
 		
 		
-		GroupLayout gl_panel_2_1_1 = new GroupLayout(panel_2_1_1);
-		gl_panel_2_1_1.setHorizontalGroup(
-			gl_panel_2_1_1.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_panel_2_1_1.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panel_2_1_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(slider, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
-						.addComponent(comboBox, Alignment.LEADING, 0, 211, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_panel_2_1_1.setVerticalGroup(
-			gl_panel_2_1_1.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2_1_1.createSequentialGroup()
-					.addGap(28)
-					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(49)
-					.addComponent(slider, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(29, Short.MAX_VALUE))
-		);
-		panel_2_1_1.setLayout(gl_panel_2_1_1);
+		comboBox = new JComboBox(quantidade);
 		
-		JPanel panel_2 = new JPanel();
+		JLabel lblMarmita = new JLabel("MARMITA");
+		
+		txtMarmita = new JTextField();
+		txtMarmita.setColumns(10);
+		
+		JLabel lblQtd = new JLabel("QUANTIDADE");
+		
+		JLabel lblPreco = new JLabel("PREÇO");
+		
+		txtPreco = new JTextField();
+		txtPreco.setColumns(10);
+		
+		JLabel lblFormaDePagamento = new JLabel("FORMA DE PAGAMENTO");
+		
+		comboBoxFormaPagamento = new JComboBox(formaPagamento);
+		
 		GroupLayout gl_panelCadarpio = new GroupLayout(panelCadarpio);
 		gl_panelCadarpio.setHorizontalGroup(
 			gl_panelCadarpio.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelCadarpio.createSequentialGroup()
-					.addGap(24)
-					.addComponent(panel_2_1_1, GroupLayout.PREFERRED_SIZE, 389, GroupLayout.PREFERRED_SIZE)
-					.addGap(41)
-					.addComponent(panel_2, GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
-					.addContainerGap())
+					.addContainerGap()
+					.addGroup(gl_panelCadarpio.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelCadarpio.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(comboBox, 0, 365, Short.MAX_VALUE)
+							.addComponent(lblMarmita)
+							.addComponent(txtMarmita))
+						.addComponent(lblQtd))
+					.addGap(247)
+					.addGroup(gl_panelCadarpio.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtPreco, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPreco, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBoxFormaPagamento, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblFormaDePagamento))
+					.addContainerGap(333, Short.MAX_VALUE))
 		);
 		gl_panelCadarpio.setVerticalGroup(
 			gl_panelCadarpio.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelCadarpio.createSequentialGroup()
-					.addGroup(gl_panelCadarpio.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(panel_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(panel_2_1_1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 146, Short.MAX_VALUE))
-					.addContainerGap(30, Short.MAX_VALUE))
+					.addGap(38)
+					.addGroup(gl_panelCadarpio.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMarmita)
+						.addComponent(lblPreco))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panelCadarpio.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelCadarpio.createSequentialGroup()
+							.addComponent(txtMarmita, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblQtd)
+							.addPreferredGap(ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(69, Short.MAX_VALUE))
+						.addGroup(gl_panelCadarpio.createSequentialGroup()
+							.addComponent(txtPreco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(24)
+							.addComponent(lblFormaDePagamento)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(comboBoxFormaPagamento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
 		);
-		
-		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-		gl_panel_2.setHorizontalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(txt, GroupLayout.PREFERRED_SIZE, 750, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(94, Short.MAX_VALUE))
-		);
-		gl_panel_2.setVerticalGroup(
-			gl_panel_2.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(txt, GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		panel_2.setLayout(gl_panel_2);
 		panelCadarpio.setLayout(gl_panelCadarpio);
 
 						frame.getContentPane().setLayout(groupLayout);
@@ -256,10 +258,10 @@ public class FazerPedido extends JFrame {
 						frame.setLocationRelativeTo(null);
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-	carregarCardapio();
+	//carregarCardapio();
 	selecionarLinha();
     salvar();
-	
+	cancelar();
 	}
 
 
@@ -282,8 +284,8 @@ public class FazerPedido extends JFrame {
 				
 			   try {
 				   if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
-						cliente =  model.getCliente((table.getSelectedRow()));
-						txt.append("nome:" +cliente.getNome()+"\n");
+						 cliente =  model.getCliente((table.getSelectedRow()));
+						 //txt.append("nome:" +cliente.getNome()+"\n");
 				   }
 				   
 			} catch (Exception e2) {
@@ -297,38 +299,32 @@ public class FazerPedido extends JFrame {
 		return cliente;
 	}
 
-	private  String carregarCardapio() throws IOException {
-		stream = new FileInputStream("/opt/cardapio.txt");
-		reader = new InputStreamReader(stream);
-		br = new BufferedReader(reader);  
-		linha = br.readLine();
-
-		comboBox.removeAllItems();
-
-		while(linha != null){
-			comboBox.addItem(linha);
-			linha = br.readLine();
-		}
-
-		br.close();
-		return linha;
-	}
-
+	/*
+	 * private String carregarCardapio() throws IOException { stream = new
+	 * FileInputStream("/opt/cardapio.txt"); reader = new InputStreamReader(stream);
+	 * br = new BufferedReader(reader); linha = br.readLine();
+	 * 
+	 * comboBox.removeAllItems();
+	 * 
+	 * while(linha != null){ comboBox.addItem(linha); linha = br.readLine(); }
+	 * 
+	 * br.close(); return linha; }
+	 */
 	
 	private void salvar() {
 		    btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent eventoSalvar) {
+			
 			cliente = selecionarLinha();
-				//List<Pedido> pedidos = new ArrayList<Pedido>();
 			Pedido pedido = new Pedido();	
-			
-			
 			
 			try {
 				if (eventoSalvar.getSource() == btnSalvar) {
 				    Cliente cliente2	=    dao.find(cliente.getCliente_identificador());
-				    pedido.setMarmita(comboBox.getSelectedItem().toString());
-				    pedido.setPreco(5F);
+				    pedido.setMarmita(txtMarmita.getText());
+				    pedido.setQuantidade((Integer) comboBox.getSelectedItem());
+				    pedido.setPreco(Float.parseFloat(txtPreco.getText()));
+				    pedido.setFormaPagamento(comboBoxFormaPagamento.getSelectedItem().toString());
 				    cliente2.getPedidos().add(pedido);
 				    pedido.setFkCliente(cliente2);
 				    
@@ -344,22 +340,22 @@ public class FazerPedido extends JFrame {
 			     	
 			}
 			
-					
-			}}); 
+		}}); 
 	}	
 
+	private void cancelar() {
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent eventoCancelar) {
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * public static void main(String[] args) throws IOException { new
-	 * FazerPedido(); }
-	 */
+				if (eventoCancelar.getSource() == btnCancelar) {
+                   
+					JOptionPane.showMessageDialog(null, "CANCELAR PEDIDO ?");	 
+					frame.dispose();
+			    	new ModuloFinanceiro();
+            		
+				}	
+			}}); 
+	}
+
+
 }
