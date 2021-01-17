@@ -38,7 +38,7 @@ import javax.swing.table.JTableHeader;
 import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
 import br.com.scr.model.Pedido;
-import br.com.scr.util.TabelaModel;
+import br.com.scr.util.TabelaModelCliente;
 
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
@@ -50,7 +50,7 @@ public class FazerPedido extends JFrame {
 	private JPanel panel = new JPanel();
 	private GenericDAO dao = new GenericDAO();
 	private JScrollPane scroller;
-	private TabelaModel model;
+	private TabelaModelCliente model;
 	private JTable table;
 	private Container tela;
 	private JFrame frame = new JFrame();
@@ -74,7 +74,7 @@ public class FazerPedido extends JFrame {
 	public FazerPedido() throws IOException {
 
 		List<Cliente> clientes = new GenericDAO().findAll();
-		model = new TabelaModel(clientes);
+		model = new TabelaModelCliente(clientes);
 		table = new JTable(model);
 		table.setBackground(new Color(255, 255, 255));
 
@@ -121,7 +121,6 @@ public class FazerPedido extends JFrame {
 		
 		table.getColumnModel().getColumn(4).setResizable(false);
 		table.getColumnModel().getColumn(4).setMinWidth(100);
-		
 		
 		JPanel bannerPanel = new JPanel();
 		bannerPanel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
@@ -183,8 +182,6 @@ public class FazerPedido extends JFrame {
 						.addComponent(btnCancelar))
 					.addGap(187))
 		);
-		
-		
 		
 		comboBox = new JComboBox(quantidade);
 		
@@ -258,89 +255,69 @@ public class FazerPedido extends JFrame {
 						frame.setLocationRelativeTo(null);
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-	//carregarCardapio();
 	selecionarLinha();
     salvar();
 	cancelar();
 	}
 
-
-	/*
-	 * private void extracted() { table.addMouseListener(new MouseAdapter() {
-	 * 
-	 * @Override public void mousePressed(MouseEvent e) { if (e.getButton() ==
-	 * MouseEvent.BUTTON1 && e.getClickCount() == 1) { String nome = (String)
-	 * table.getValueAt(table.getSelectedRow(),0); String telefone = (String)
-	 * table.getValueAt(table.getSelectedRow(),1); System.out.println(nome +
-	 * telefone); } }
-	 * 
-	 * }); }
-	 */
-
 	private Cliente selecionarLinha() {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
-			   try {
-				   if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
-						 cliente =  model.getCliente((table.getSelectedRow()));
-						 //txt.append("nome:" +cliente.getNome()+"\n");
-				   }
-				   
-			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(null, "SELECIONE O CLIENTE PARA FAZER O PEDIDO!"+JOptionPane.ERROR_MESSAGE);
-			} 
-					
-				
+
+				try {
+					if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
+						cliente =  model.getCliente((table.getSelectedRow()));
+					}
+
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "SELECIONE O CLIENTE PARA FAZER O PEDIDO!"+JOptionPane.ERROR_MESSAGE);
+				} 
+
+
 			}
 
 		});
 		return cliente;
 	}
 
-	/*
-	 * private String carregarCardapio() throws IOException { stream = new
-	 * FileInputStream("/opt/cardapio.txt"); reader = new InputStreamReader(stream);
-	 * br = new BufferedReader(reader); linha = br.readLine();
-	 * 
-	 * comboBox.removeAllItems();
-	 * 
-	 * while(linha != null){ comboBox.addItem(linha); linha = br.readLine(); }
-	 * 
-	 * br.close(); return linha; }
-	 */
-	
 	private void salvar() {
-		    btnSalvar.addActionListener(new ActionListener() {
+		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent eventoSalvar) {
-			
-			cliente = selecionarLinha();
-			Pedido pedido = new Pedido();	
-			
-			try {
-				if (eventoSalvar.getSource() == btnSalvar) {
-				    Cliente cliente2	=    dao.find(cliente.getCliente_identificador());
-				    pedido.setMarmita(txtMarmita.getText());
-				    pedido.setQuantidade((Integer) comboBox.getSelectedItem());
-				    pedido.setPreco(Float.parseFloat(txtPreco.getText()));
-				    pedido.setFormaPagamento(comboBoxFormaPagamento.getSelectedItem().toString());
-				    cliente2.getPedidos().add(pedido);
-				    pedido.setFkCliente(cliente2);
-				    
-				    dao.salvar(pedido);
+
+				cliente = selecionarLinha();
+				Pedido pedido = new Pedido();	
+
+				try {
+					if (eventoSalvar.getSource() == btnSalvar) {
+						Long cliente_identificador = cliente.getCliente_identificador();
+						Cliente cliente2	=    dao.find(cliente_identificador);
+						pedido.setMarmita(txtMarmita.getText());
+						pedido.setQuantidade((Integer) comboBox.getSelectedItem());
+						pedido.setPreco(Float.parseFloat(txtPreco.getText()));
+						pedido.setFormaPagamento(comboBoxFormaPagamento.getSelectedItem().toString());
+						pedido.setStatusPedido("ABERTO");
+						cliente2.getPedidos().add(pedido);
+						pedido.setFkCliente(cliente2);
+
+						dao.salvar(pedido);
+
+						JOptionPane.showMessageDialog(null, "PEDIDO SALVO COM SUCESSO!");
+						frame.dispose();
+						Long cliente_pedido = pedido.getFkCliente().getCliente_identificador();
+						new ImprimirPedido(cliente_pedido);
+					}
+				} catch (Exception e) {
+
+					JOptionPane.showMessageDialog(null, "SELECIONE O CLIENTE PARA FAZER O PEDIDO!");
+
 				}
-			} catch (Exception e) {
-				
-				JOptionPane.showMessageDialog(null, "SELECIONE O CLIENTE PARA FAZER O PEDIDO!"+JOptionPane.ERROR_MESSAGE);
-			    
-			}
-			
-			finally {
-			     	
-			}
-			
-		}}); 
+
+				finally {
+
+				}
+
+			}}); 
 	}	
 
 	private void cancelar() {
@@ -348,14 +325,12 @@ public class FazerPedido extends JFrame {
 			public void actionPerformed(ActionEvent eventoCancelar) {
 
 				if (eventoCancelar.getSource() == btnCancelar) {
-                   
+
 					JOptionPane.showMessageDialog(null, "CANCELAR PEDIDO ?");	 
 					frame.dispose();
-			    	new ModuloFinanceiro();
-            		
+					new ModuloFinanceiro();
+
 				}	
 			}}); 
 	}
-
-
 }

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -26,10 +27,10 @@ public class Pedido implements Serializable {
 	private String observacao;
 	private Integer quantidade;
 	private String formaPagamento;
-	//private enum statusPedido(Aberto,Encerrado);
+	private String statusPedido;
 	//private Date dataHoraPedido;
 	private Cliente fkCliente = new Cliente();
-
+    
 	public Pedido() {
 
 	}
@@ -86,15 +87,6 @@ public class Pedido implements Serializable {
 		this.formaPagamento = formaPagamento;
 	}
 
-	@Column(name="observacao")
-	public String getObservacao() {
-		return observacao;
-	}
-
-	public void setObservacao(String observacao) {
-		this.observacao = observacao;
-	}
-
 	@ManyToOne
 	@JoinColumn(name = "fkCliente", nullable = false)
 	public Cliente getFkCliente() {
@@ -105,8 +97,14 @@ public class Pedido implements Serializable {
 		this.fkCliente = fkCliente;
 	}
 
+	@Column(name="statusPedido")
+	public String getStatusPedido() {
+		return statusPedido;
+	}
 	
-	
+	public void setStatusPedido(String statusPedido) {
+		this.statusPedido = statusPedido;
+	}
 	
 	@Override
 	public int hashCode() {
@@ -116,7 +114,6 @@ public class Pedido implements Serializable {
 		return result;
 	}
 
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -45,7 +44,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
-import br.com.scr.util.TabelaModel;
+import br.com.scr.util.TabelaModelCliente;
 
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
@@ -56,7 +55,7 @@ public class ModuloFinanceiro extends JFrame {
 
 	private JPanel panel = new JPanel();
 	private GenericDAO dao = new GenericDAO();
-	private TabelaModel model;
+	private TabelaModelCliente model;
 	private Container tela;
 	private JFrame frame = new JFrame();
    
@@ -80,7 +79,7 @@ public class ModuloFinanceiro extends JFrame {
 	public ModuloFinanceiro() {
 
 		List<Cliente> clientes = new GenericDAO().findAll();
-		model = new TabelaModel(clientes);
+		model = new TabelaModelCliente(clientes);
 
 		frame = new JFrame();
 
@@ -168,6 +167,7 @@ public class ModuloFinanceiro extends JFrame {
 						
 						JModuloCliente.setText("MÓDULO CLIENTE");
 						menuBar1.add(JModuloCliente);
+						jMenuItemCadastrarCliente.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/add-user-16.png")));
 						
 						jMenuItemCadastrarCliente.setText("Cadastrar Cliente");
 						JModuloCliente.add(jMenuItemCadastrarCliente);
@@ -176,10 +176,11 @@ public class ModuloFinanceiro extends JFrame {
 						
 						JModuloPedido.setText("MÓDULO PEDIDO");
 						menuBar2.add(JModuloPedido);
+						jMenuItemFazerpedido.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/restaurant-3-16(2).png")));
 						
 						jMenuItemFazerpedido.setText("Fazer Pedido");
 						JModuloPedido.add(jMenuItemFazerpedido);
-						jMenuItemPedidosRealizados.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/add-user-24.png")));
+						jMenuItemPedidosRealizados.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/list-ingredients-16.png")));
 						
 						JModuloPedido.add(jMenuItemPedidosRealizados);
 	                    
@@ -197,7 +198,7 @@ public class ModuloFinanceiro extends JFrame {
                     
 					try {
 						frame.dispose();
-						new CadastrarCliente2();
+						new CadastrarCliente();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -260,16 +261,9 @@ public class ModuloFinanceiro extends JFrame {
 	    
 	}
 	
-	
 	public static void main(String[] args) throws IOException {
 		
-		GenericDAO dao = new GenericDAO();
-		
-		//List<Pedido> pedidos = dao.findAllPedidos(2L);
-		
-		
 		new ModuloFinanceiro();
-	
 	
 	}
 }

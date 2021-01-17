@@ -11,7 +11,7 @@ import javax.swing.table.AbstractTableModel;
 import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
 
-public class TabelaModel extends AbstractTableModel {
+public class TabelaModelCliente extends AbstractTableModel {
 
 
 	private static final long serialVersionUID = 1L;
@@ -21,7 +21,7 @@ public class TabelaModel extends AbstractTableModel {
 	private List<Cliente> clientes;
     private Cliente cliente = new Cliente();
 
-	public TabelaModel(List<Cliente> clientesParam) {
+	public TabelaModelCliente(List<Cliente> clientesParam) {
 		//this.fireTableDataChanged();
 		clientes = clientesParam;	 
 	}
@@ -36,21 +36,19 @@ public class TabelaModel extends AbstractTableModel {
 		return  nomeColunas.length;	
 	}
 
-
-
 	@Override
 	public Object getValueAt(int linha, int coluna) {
 		// TODO Auto-generated method stub
 
-		Cliente usuarioSelecionado = clientes.get(linha);
+		Cliente clienteSelecionado = clientes.get(linha);
 		Object valueObject = null;
 		switch(coluna){
 		//case 0: valueObject = usuarioSelecionado.getIdentificador(); break;
-		case 0: valueObject = usuarioSelecionado.getNome(); break;
-		case 1 : valueObject = usuarioSelecionado.getTelefone(); break;
-		case 2 : valueObject = usuarioSelecionado.getEmail(); break;
-		case 3 : valueObject = usuarioSelecionado.getFkEndereco().getEndereco();break;
-		case 4 : valueObject = usuarioSelecionado.getFkEndereco().getComplemento();break;
+		case 0: valueObject = clienteSelecionado.getNome(); break;
+		case 1 : valueObject = clienteSelecionado.getTelefone(); break;
+		case 2 : valueObject = clienteSelecionado.getEmail(); break;
+		case 3 : valueObject = clienteSelecionado.getFkEndereco().getEndereco();break;
+		case 4 : valueObject = clienteSelecionado.getFkEndereco().getComplemento();break;
 		default: System.err.println("Índice inválido para propriedade do bean Usuario.class");
 		}			
 
@@ -59,7 +57,6 @@ public class TabelaModel extends AbstractTableModel {
 
 	public Cliente getCliente(int linha) {
 
-		
 		cliente.setCliente_identificador(clientes.get(linha).getCliente_identificador());
 		cliente.setNome(clientes.get(linha).getNome());
         cliente.setTelefone(clientes.get(linha).getTelefone());
@@ -99,12 +96,11 @@ public class TabelaModel extends AbstractTableModel {
 		return nomeColunas[column];
 	}
 
-
 	public static void main(String[] args) {
 
 		List<Cliente> clientes = new GenericDAO().findAll();
 
-		TabelaModel model = new TabelaModel(clientes);
+		TabelaModelCliente model = new TabelaModelCliente(clientes);
 		JTable table = new JTable(model);	
 		JFrame frame = new JFrame();
 

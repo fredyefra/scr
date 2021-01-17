@@ -1,22 +1,13 @@
 package br.com.scr.telas;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.print.DocFlavor;
@@ -28,39 +19,28 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.JobName;
-import javax.print.attribute.standard.MediaSize;
 import javax.print.attribute.standard.MediaSizeName;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
 
 import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
 import br.com.scr.model.Pedido;
-import br.com.scr.util.TabelaModel;
-import javax.swing.JSplitPane;
-import javax.swing.JTextPane;
-import javax.swing.JScrollBar;
-import javax.swing.border.BevelBorder;
+
+import br.com.scr.util.TabelaModelCliente;
 
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
@@ -71,12 +51,14 @@ public class ImprimirPedido extends JFrame {
 
 	private JPanel panel = new JPanel();
 	private GenericDAO dao = new GenericDAO();
-	private TabelaModel model;
+	private TabelaModelCliente model;
 	private Container tela;
 	private JFrame frame = new JFrame();
     
     protected  String imprimir;
 	
+    private Long cliente_pedido;
+    
 	protected Cliente cliente = new Cliente();
 	protected  FileInputStream stream;
 	protected InputStreamReader reader;
@@ -87,10 +69,26 @@ public class ImprimirPedido extends JFrame {
 	
 	private JTextArea textArea = new JTextArea(10, 20);
 	
-	public ImprimirPedido() throws IOException {
+	public ImprimirPedido() {
+		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 450, Short.MAX_VALUE)
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGap(0, 263, Short.MAX_VALUE)
+		);
+		getContentPane().setLayout(groupLayout);
+		
+	}
+	
+	public ImprimirPedido(Long cliente_pedido) {
 
+		this.cliente_pedido = cliente_pedido;
+		
 		List<Cliente> clientes = new GenericDAO().findAll();
-		model = new TabelaModel(clientes);
+		model = new TabelaModelCliente(clientes);
 
 		frame = new JFrame();
 
@@ -169,7 +167,7 @@ public class ImprimirPedido extends JFrame {
 						textArea.setEditable(false);
 						textArea.setWrapStyleWord(true);
 						textArea.setLineWrap(true);
-						textArea.append(nota(1L));
+						textArea.append(notaFiscal(cliente_pedido));
 						
 						panel_1.setLayout(gl_panel_1);
 						frame.getContentPane().setLayout(groupLayout);
@@ -180,25 +178,24 @@ public class ImprimirPedido extends JFrame {
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	                    
 	
-	
 	}
 
 
-	private String nota(Long num) {
+	private String notaFiscal(Long cliente_pedido) {
 
-		List<Pedido> pedidos = dao.findAllPedidos(1L);
+		List<Pedido> pedidos = dao.findAllPedidos(cliente_pedido);
 		
 		String conteudoImprimir = "";
 		
 		Float total = 0F;
 		
-		Pedido pedido2 = null;
+		Pedido pedidoAux = null;
 		
 		for (Pedido pedido : pedidos) {
 			   conteudoImprimir += pedido.getQuantidade() + "    "+ 
 		                           pedido.getPreco()  + "        "+  
 			                       pedido.getMarmita()+ "\n\r";
-			   pedido2 = pedido;
+			   pedidoAux = pedido;
 		       total += (pedido.getPreco()*pedido.getQuantidade());  
 		       
 		}
@@ -207,7 +204,7 @@ public class ImprimirPedido extends JFrame {
 		  		+ "CNPJ: 000000000000 COMERCIO DE ALIMENTOS XYZ\n"
 		  		+ "ENDEREÇO: QS 09 LOJA 02 LT 3/4  \n"
 		  		+ "------------------------------------------------------------------------------------------------------------------------\n\r"
-		  		+ "CLIENTE: " + pedido2.getFkCliente().getNome()        +"       TELEFONE: " + pedido2.getFkCliente().getTelefone() +"\n\n"      
+		  		+ "CLIENTE: " + pedidoAux.getFkCliente().getNome()        +"       TELEFONE: " + pedidoAux.getFkCliente().getTelefone() +"\n\n"      
 		  		+ "QTD  VALOR  DESCRIÇÃO  "
 		  		+ " ------------------------------------------------------------------------------------------------------------------------\r"
 		  		+"\r"+conteudoImprimir+"\n"
@@ -215,7 +212,7 @@ public class ImprimirPedido extends JFrame {
 		  		+ "_________________________________________________________________________\n"
 		  		+ "\nTOTAL DE ITENS:                                                                                     "+pedidos.size() 
 		  		+  "\nTOTAL  R$:                                                                                         "+total
-		  		+  "\nFORMA DE PAGAMENTO:                                                             "+pedido2.getFormaPagamento()
+		  		+  "\nFORMA DE PAGAMENTO:                                                             "+pedidoAux.getFormaPagamento()
 		  		+  "";
 		  		
 		  
@@ -252,20 +249,4 @@ public class ImprimirPedido extends JFrame {
 	    
 	}
 	
-
-	
-	
-	
-	
-	public static void main(String[] args) throws IOException {
-		
-		GenericDAO dao = new GenericDAO();
-		
-		//List<Pedido> pedidos = dao.findAllPedidos(2L);
-		
-		
-		new ImprimirPedido().nota(1L);
-	
-	
-	}
 }

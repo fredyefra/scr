@@ -2,9 +2,7 @@ package br.com.scr.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name="tb_cliente")
 public class Cliente implements Serializable {
@@ -31,8 +27,7 @@ public class Cliente implements Serializable {
 	private String email;
 	private Endereco fkEndereco = new Endereco();
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
-    //List<Pedido> pedidos = new ArrayList<Pedido>();
-
+    
 	public Cliente() {
 
 	}
@@ -89,8 +84,6 @@ public class Cliente implements Serializable {
 		this.fkEndereco = fkEndereco; 
 	}
 
-	
-	
 	/*
 	 * @OneToMany (cascade = CascadeType.ALL,orphanRemoval = true)
 	 * 
@@ -109,10 +102,6 @@ public class Cliente implements Serializable {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-
-	
-	
-	
 
 	@Override
 	public int hashCode() {
@@ -138,5 +127,4 @@ public class Cliente implements Serializable {
 	public String toString() {
 		return "**** IDENTIFICADOR WEB SERVICE **** " + this + cliente_identificador;
 	}
-
 }
