@@ -1,13 +1,21 @@
 package br.com.scr.telas;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.print.DocFlavor;
@@ -24,6 +32,7 @@ import javax.print.attribute.standard.OrientationRequested;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,66 +40,45 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import org.jboss.jandex.Main;
 
 import br.com.scr.dao.GenericDAO;
 import br.com.scr.model.Cliente;
+import br.com.scr.model.Endereco;
 import br.com.scr.model.Pedido;
-
-import br.com.scr.util.TabelaModelCliente;
+import br.com.scr.util.ConsultaCorreiosWrapper;
 
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
  */
-public class ImprimirPedido extends JFrame {
+public class imprimirPedido2 extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	private JPanel panel = new JPanel();
 	private GenericDAO dao = new GenericDAO();
-	private TabelaModelCliente model;
-	private Container tela;
-	private JFrame frame = new JFrame();
-    
-    protected  String imprimir;
 	
-    private Long cliente_pedido;
-    
-	protected Cliente cliente = new Cliente();
-	protected  FileInputStream stream;
-	protected InputStreamReader reader;
-    protected BufferedReader br;
-	protected String linha;
-	protected JComboBox comboBox = new JComboBox();
-	protected JScrollPane scroller;
+	private JFrame frame = new JFrame();
+    private Cliente cliente = new Cliente();
+	private Endereco endereco = new Endereco();
+	private JScrollPane scroller;
+
+	private  String imprimir;	    
+	private Long cliente_pedido;
+	
 	
 	private JTextArea textArea = new JTextArea(10, 20);
 	
-	public ImprimirPedido() {
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 450, Short.MAX_VALUE)
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 263, Short.MAX_VALUE)
-		);
-		getContentPane().setLayout(groupLayout);
-		
-	}
-	
-	public ImprimirPedido(Long cliente_pedido) {
+	public imprimirPedido2(Long cliente_pedido) {
 
-		this.cliente_pedido = cliente_pedido;
-		
-		List<Cliente> clientes = new GenericDAO().findAll();
-		model = new TabelaModelCliente(clientes);
+		this.cliente_pedido = cliente_pedido;	
 
 		frame = new JFrame();
 
@@ -104,65 +92,58 @@ public class ImprimirPedido extends JFrame {
 	    direita.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		
-		JPanel bannerPanel = new JPanel();
-		bannerPanel.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+		JPanel panelBanner = new JPanel();
+		panelBanner.setBackground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
         //scroller = new JScrollPane(textArea);
 		
 		
 		JLabel jLabel = new JLabel();
 		jLabel.setIcon(new ImageIcon("printer-32.png"));
-		jLabel.setText("IMPRIMIR PEDIDO");
+		jLabel.setText("IMPRIMIR PEDIDO 2");
 		jLabel.setForeground(Color.WHITE);
 		jLabel.setFont(new Font("Dialog", Font.BOLD, 36));
-		bannerPanel.add(jLabel);
-		
-		JPanel panel_1 = new JPanel();
-		//panel_1.setBackground(new Color(245,245,220));
-		
-
-						tela = frame.getContentPane();
+		panelBanner.add(jLabel);
+						
+						JPanel panelBody = new JPanel();
+						
 						GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 						groupLayout.setHorizontalGroup(
-							groupLayout.createParallelGroup(Alignment.TRAILING)
+							groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(12)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(12)
-											.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 1332, GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(297)
-											.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 886, Short.MAX_VALUE)
-											.addGap(161)))
+										.addComponent(panelBody, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE)
+										.addComponent(panelBanner, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1332, Short.MAX_VALUE))
 									.addGap(22))
 						);
 						groupLayout.setVerticalGroup(
 							groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(6)
-									.addComponent(bannerPanel, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
+									.addComponent(panelBanner, GroupLayout.PREFERRED_SIZE, 68, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
-									.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 429, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap(222, Short.MAX_VALUE))
+									.addComponent(panelBody, GroupLayout.PREFERRED_SIZE, 554, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap(97, Short.MAX_VALUE))
 						);
 						
 						JScrollPane scrollPane = new JScrollPane();
-						scrollPane.setViewportBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-						GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-						gl_panel_1.setHorizontalGroup(
-							gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addGap(197)
-									.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
-									.addGap(199))
-						);
-						gl_panel_1.setVerticalGroup(
-							gl_panel_1.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel_1.createSequentialGroup()
-									.addContainerGap()
-									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)
-									.addContainerGap(63, Short.MAX_VALUE))
-						);
 						
+						GroupLayout gl_panelBody = new GroupLayout(panelBody);
+						gl_panelBody.setHorizontalGroup(
+							gl_panelBody.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_panelBody.createSequentialGroup()
+									.addContainerGap(434, Short.MAX_VALUE)
+									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 489, GroupLayout.PREFERRED_SIZE)
+									.addGap(409))
+						);
+						gl_panelBody.setVerticalGroup(
+							gl_panelBody.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panelBody.createSequentialGroup()
+									.addContainerGap()
+									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap(134, Short.MAX_VALUE))
+						);
+						//scrollPane.setViewportView(textArea);
 						
 						textArea.setBackground(new Color(245,245,220));
 						scrollPane.setViewportView(textArea);
@@ -171,7 +152,7 @@ public class ImprimirPedido extends JFrame {
 						textArea.setLineWrap(true);
 						textArea.append(notaFiscal(cliente_pedido));
 						
-						panel_1.setLayout(gl_panel_1);
+						panelBody.setLayout(gl_panelBody);
 						frame.getContentPane().setLayout(groupLayout);
 
 
@@ -179,9 +160,8 @@ public class ImprimirPedido extends JFrame {
 						frame.setLocationRelativeTo(null);
 						frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	                    
-	
+						
 	}
-
 
 	private String notaFiscal(Long cliente_pedido) {
 
@@ -250,7 +230,9 @@ public class ImprimirPedido extends JFrame {
 		}
 	    
 	}
-	public static void main(String[] args) {
-		new ImprimirPedido(1L);
+
+
+	public static void main(String[] args) throws IOException {
+		new imprimirPedido2(1L);
 	}
 }

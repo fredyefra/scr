@@ -61,10 +61,11 @@ public class Newdate implements Runnable {
         }
     }
 
-    public void printTime() {
-        b.setText(timeString.toUpperCase());
-    }
 
+    public void printTime() {
+    	b.setText(timeString.toUpperCase());
+    }
+    
     public static void main(String[] args) {
         Newdate dt = new Newdate();
         dt.DigitalWatch();

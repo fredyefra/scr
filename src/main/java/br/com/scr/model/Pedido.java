@@ -1,8 +1,6 @@
 package br.com.scr.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name="tb_pedido")
@@ -32,7 +28,6 @@ public class Pedido implements Serializable {
 	private Cliente fkCliente = new Cliente();
     
 	public Pedido() {
-
 	}
 
 	public Pedido(String marmita, Cliente fkCliente) {
@@ -128,7 +123,6 @@ public class Pedido implements Serializable {
 
 	@Override
 	public String toString() {
-		return "**** IDENTIFICADOR WEB SERVICE **** " + this + pedido_identificador;
+		return "**** IDENTIFICADOR **** " + this + pedido_identificador;
 	}
-
 }

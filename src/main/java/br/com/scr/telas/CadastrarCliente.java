@@ -8,6 +8,12 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -36,7 +42,7 @@ import br.com.scr.util.ConsultaCorreiosWrapper;
 /**
  * @author fredye Classe responsavel por desenhar a tela de fazer pedido
  */
-public class CadastrarCliente extends JFrame {
+public class CadastrarCliente extends JFrame implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -64,9 +70,18 @@ public class CadastrarCliente extends JFrame {
 	private JButton btnSalvar = new JButton();
 	private JButton btnCancelar = new JButton();
 	private JTextField txtTelefone;
+
+	Thread t1 = null;
+    int hours = 0, minutes = 0, seconds = 0;
+    String timeString = "";
+	
+    private JLabel hora = new JLabel();
+    
 	
 	public CadastrarCliente() throws IOException {
 
+		t1 = new Thread(this);
+		t1.start();
 
 		frame = new JFrame();
 
@@ -87,7 +102,7 @@ public class CadastrarCliente extends JFrame {
 		
 		JLabel jLabel = new JLabel();
 		jLabel.setIcon(new ImageIcon("add-user-2-32.png"));
-		jLabel.setText("CADASTRAR CLIENTE 2");
+		jLabel.setText("CADASTRAR CLIENTE");
 		jLabel.setForeground(Color.WHITE);
 		jLabel.setFont(new Font("Dialog", Font.BOLD, 36));
 		panelBanner.add(jLabel);
@@ -196,6 +211,13 @@ public class CadastrarCliente extends JFrame {
 						
 						txtTelefone = new JTextField();
 						txtTelefone.setColumns(10);
+						
+						//String hora = new Newdate().printTime();
+						
+						//JLabel hora = new JLabel();
+						//hora.setText(timeString.toUpperCase());
+						
+						
 						GroupLayout gl_panelBody = new GroupLayout(panelBody);
 						gl_panelBody.setHorizontalGroup(
 							gl_panelBody.createParallelGroup(Alignment.LEADING)
@@ -239,11 +261,15 @@ public class CadastrarCliente extends JFrame {
 													.addComponent(txtCep)
 													.addComponent(txtComplemento))
 												.addGap(302)))))
+								.addGroup(Alignment.TRAILING, gl_panelBody.createSequentialGroup()
+									.addContainerGap(1032, Short.MAX_VALUE)
+									.addComponent(hora, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE)
+									.addGap(84))
 						);
 						gl_panelBody.setVerticalGroup(
 							gl_panelBody.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panelBody.createSequentialGroup()
-									.addGap(66)
+									.addGap(61)
 									.addGroup(gl_panelBody.createParallelGroup(Alignment.BASELINE)
 										.addComponent(lblNome)
 										.addComponent(lblTelefone))
@@ -275,7 +301,9 @@ public class CadastrarCliente extends JFrame {
 											.addPreferredGap(ComponentPlacement.RELATED)
 											.addComponent(txtCidade, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 										.addComponent(txtComplemento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-									.addGap(89))
+									.addGap(33)
+									.addComponent(hora, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap())
 						);
 						panelBody.setLayout(gl_panelBody);
 						frame.getContentPane().setLayout(groupLayout);
@@ -359,4 +387,38 @@ public class CadastrarCliente extends JFrame {
 		});
 	}
 
+	@Override
+	 public void run() {
+        try {
+            while (true) {
+
+                LocalDateTime currentTime = LocalDateTime.now();
+                Month month = currentTime.getMonth();
+                int day = currentTime.getDayOfMonth();
+                int year = currentTime.getYear();
+                DayOfWeek dayOfWeek = currentTime.getDayOfWeek();
+
+                Calendar cal = Calendar.getInstance();
+                hours = cal.get(Calendar.HOUR_OF_DAY);
+                if (hours > 12)
+                    hours -= 12;
+                minutes = cal.get(Calendar.MINUTE);
+                seconds = cal.get(Calendar.SECOND);
+
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MMMM/yyyy HH:mm:ss");
+                Date date = cal.getTime();
+                timeString = formatter.format(date);
+
+                printTime();
+
+                t1.sleep(10); // interval given in milliseconds
+            }
+        } catch (Exception e) {
+        }
+    }
+
+
+    public void printTime() {
+    	hora.setText(timeString.toUpperCase());
+    }
 }

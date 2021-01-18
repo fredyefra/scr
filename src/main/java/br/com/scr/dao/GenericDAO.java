@@ -73,12 +73,23 @@ public class GenericDAO  {
 		Root<Pedido> pedido = cq.from(Pedido.class);
 
 		cq.select(pedido).where(cb.equal(pedido.get("fkCliente"), cliente_pedido));
-		
 		TypedQuery<Pedido> query = em.createQuery(cq);
 
 		return query.getResultList();
     }
 
+	public List<Pedido> findAllPedidos() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Pedido> cq = cb.createQuery(Pedido.class);
+		Root<Pedido> pedido = cq.from(Pedido.class);
+		cq.select(pedido);
+		TypedQuery<Pedido> query = em.createQuery(cq);
+
+		return query.getResultList();
+    }
+
+	
+	
 	public static void main(String[] args) {
 
 		 List<Pedido> findAllPedidos = new GenericDAO().findAllPedidos(1L);

@@ -305,7 +305,7 @@ public class FazerPedido extends JFrame {
 						JOptionPane.showMessageDialog(null, "PEDIDO SALVO COM SUCESSO!");
 						frame.dispose();
 						Long cliente_pedido = pedido.getFkCliente().getCliente_identificador();
-						new ImprimirPedido(cliente_pedido);
+						new imprimirPedido2(cliente_pedido);
 					}
 				} catch (Exception e) {
 
