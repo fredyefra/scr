@@ -47,7 +47,7 @@ import br.com.scr.model.Cliente;
 import br.com.scr.util.TabelaModelCliente;
 
 /**
- * @author fredye Classe responsavel por desenhar a tela de fazer pedido
+ * @author fredye Classe responsavel por desenhar a tela de fazer pedido testando MATOS
  */
 public class ModuloFinanceiro extends JFrame {
 
@@ -167,7 +167,7 @@ public class ModuloFinanceiro extends JFrame {
 						
 						JModuloCliente.setText("MÓDULO CLIENTE");
 						menuBar1.add(JModuloCliente);
-						jMenuItemCadastrarCliente.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/add-user-16.png")));
+						//jMenuItemCadastrarCliente.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/add-user-16.png")));
 						
 						jMenuItemCadastrarCliente.setText("Cadastrar Cliente");
 						JModuloCliente.add(jMenuItemCadastrarCliente);
@@ -176,11 +176,11 @@ public class ModuloFinanceiro extends JFrame {
 						
 						JModuloPedido.setText("MÓDULO PEDIDO");
 						menuBar2.add(JModuloPedido);
-						jMenuItemFazerpedido.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/restaurant-3-16(2).png")));
+						//jMenuItemFazerpedido.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/restaurant-3-16(2).png")));
 						
 						jMenuItemFazerpedido.setText("Fazer Pedido");
 						JModuloPedido.add(jMenuItemFazerpedido);
-						jMenuItemPedidosRealizados.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/list-ingredients-16.png")));
+						//jMenuItemPedidosRealizados.setIcon(new ImageIcon(ModuloFinanceiro.class.getResource("/br/com/scr/icones/list-ingredients-16.png")));
 						
 						JModuloPedido.add(jMenuItemPedidosRealizados);
 	                    
