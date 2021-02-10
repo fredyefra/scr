@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 //@XmlRootElement
@@ -22,6 +23,8 @@ public class Endereco implements EntityBase, Serializable {
 	private String complemento;
 	private String cidade;
 
+	
+	
 	public Endereco() {
 	}
 

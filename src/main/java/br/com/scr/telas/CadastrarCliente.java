@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -322,8 +323,17 @@ public class CadastrarCliente extends JFrame implements Runnable {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent eventoSalvar) {
 
-				if (eventoSalvar.getSource() == btnSalvar) {
+				//if (eventoSalvar.getSource() == btnSalvar) {
 
+				
+				List<String> nomes = dao.verificarNome();
+
+				if (nomes.contains(txtNome.getText())) {
+					JOptionPane.showMessageDialog(null, cliente.getNome()+", " + "ERRO!"+JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				
+				if (eventoSalvar.getSource() == btnSalvar) {
 					cliente.setNome(txtNome.getText());
 					cliente.setTelefone(txtDDD.getText()+"-"+txtTelefone.getText());
 					cliente.setEmail(txtEmail.getText()); 
@@ -331,17 +341,17 @@ public class CadastrarCliente extends JFrame implements Runnable {
 					cliente.setFkEndereco(endereco);
 					
 					dao.salvar(cliente);
+                    JOptionPane.showMessageDialog(null, cliente.getNome()+", " + "SALVO COM SUCESSO!"+JOptionPane.INFORMATION_MESSAGE);
+					frame.dispose();
+					new FazerPedido();
+						 
 
-					JOptionPane.showMessageDialog(null, cliente.getNome()+", " + "SALVO COM SUCESSO!"+JOptionPane.INFORMATION_MESSAGE);	 
-					try {
-						frame.dispose();
-						new FazerPedido();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-					dispose();
-				}	
+				}
+				
+										
+						
+					
+				//}	
 			}}); 
 	}	
 
@@ -351,7 +361,8 @@ public class CadastrarCliente extends JFrame implements Runnable {
 
 				if (eventoCancelar.getSource() == btnCancelar) {
 					frame.dispose();
-			    	new ModuloFinanceiro(); 
+			    	cliente = null;
+					new ModuloFinanceiro(); 
 				}	
 			}}); 
 	}

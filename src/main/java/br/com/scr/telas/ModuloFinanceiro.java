@@ -217,12 +217,12 @@ public class ModuloFinanceiro extends JFrame {
 
 				if (evento.getSource() == jMenuItemFazerpedido) {
 
-					try {
+					//try {
 						frame.dispose();
 						new FazerPedido();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					//} catch (IOException e) {
+						//e.printStackTrace();
+					//}
 
 				}	
 			}
@@ -261,7 +261,7 @@ public class ModuloFinanceiro extends JFrame {
 	    
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		
 		new ModuloFinanceiro();
 	

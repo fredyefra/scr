@@ -9,13 +9,6 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
 
 import br.com.scr.model.Cliente;
 import br.com.scr.model.Pedido;
@@ -33,18 +26,16 @@ public class GenericDAO  {
 
 	public void salvar(Cliente cliente) {
 		em.getTransaction().begin(); 
-		em.persist(cliente);
+		em.merge(cliente);
 		em.getTransaction().commit();
 		em.close();
-
 	}
 
 	public void salvar(Pedido pedido) {
 		em.getTransaction().begin(); 
 		em.persist(pedido);
 		em.getTransaction().commit();
-		//em.close();
-
+		em.close();
 	}
 
 	public List<Cliente> findAll() {
@@ -79,6 +70,7 @@ public class GenericDAO  {
     }
 
 	public List<Pedido> findAllPedidos() {
+		//em.getTransaction().begin();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Pedido> cq = cb.createQuery(Pedido.class);
 		Root<Pedido> pedido = cq.from(Pedido.class);
@@ -88,14 +80,29 @@ public class GenericDAO  {
 		return query.getResultList();
     }
 
+    public List<String> verificarNome() {
+	
+    	CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<String> cq = cb.createQuery(String.class);
+		Root<Cliente> cliente = cq.from(Cliente.class);
+		
+		cq.select(cliente.<String>get("nome"));
+		TypedQuery<String> query = em.createQuery(cq);
+		
+		//List<String> nome = (List<String>) typedQuery.getResultList();
+
+		
+		return query.getResultList();
+	}
+
 	
 	
 	public static void main(String[] args) {
 
-		 List<Pedido> findAllPedidos = new GenericDAO().findAllPedidos(1L);
+		 List<String> findAllPedidos = new GenericDAO().verificarNome();
          
-		 for (Pedido pedido : findAllPedidos) {
-			 //System.out.println(pedido.get().getCliente_identificador() + " - " + pedido.getCliente().getNome() + " - " + pedido.getPedido_identificador() + " - " + pedido.getObservacao()  );	
+		 for (String pedido : findAllPedidos) {
+			 System.out.println(pedido);	
 		 }
 		 
 		 

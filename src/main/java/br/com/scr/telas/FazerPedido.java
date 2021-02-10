@@ -71,7 +71,7 @@ public class FazerPedido extends JFrame {
 	
 	private JTextField txtPreco;
 	
-	public FazerPedido() throws IOException {
+	public FazerPedido() {
 
 		List<Cliente> clientes = new GenericDAO().findAll();
 		model = new TabelaModelCliente(clientes);
